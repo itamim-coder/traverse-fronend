@@ -98,7 +98,7 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="bg-slate-200 py-5 rounded-full">
+    <div className="bg-slate-200 py-5 rounded-full bg-opacity-25">
       <div className="container mx-auto">
         <div className="flex flex-wrap items-center justify-between">
           <div className="w-full md:w-1/3 mb-4 md:mb-0">

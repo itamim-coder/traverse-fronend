@@ -18,6 +18,8 @@ export const baseApi = createApi({
     "getLocation",
     "locationBasedHotel",
     "getTour",
+    "getAvailableTour",
+    "getUpcomingTour",
     "singleTour",
     "createHotel",
   ],
