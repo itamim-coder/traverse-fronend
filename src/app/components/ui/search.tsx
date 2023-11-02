@@ -7,11 +7,12 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { addHours, format } from "date-fns";
 
 import { useAppDispatch } from "@/redux/hooks";
-import { setSearchParameters } from "@/redux/features/searchSlice";
+
 import { useRouter } from "next/navigation";
 
 import { FaLocationDot } from "react-icons/fa6";
 import { useGetLocationQuery } from "@/redux/api/locationApi";
+import { setSearchParameters } from "@/redux/Features/searchSlice";
 const Search = () => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
