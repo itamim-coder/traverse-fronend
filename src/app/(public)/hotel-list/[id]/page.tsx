@@ -6,7 +6,7 @@ import { useLocationBasedHotelQuery } from "@/redux/api/locationApi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setSearchQuery } from "@/redux/Features/hotelSlice";
-
+import { BsArrowUpRight } from "react-icons/bs";
 const HotelList = ({ params }) => {
   const [priceRange, setPriceRange] = useState(10000);
 
@@ -26,8 +26,8 @@ const HotelList = ({ params }) => {
   const filteredItems = hotelData?.Hotel?.filter((item) => {
     const range_hotel = item.cheapest_price <= priceRange;
     const searchMatch =
-    !searchQuery ||
-    item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      !searchQuery ||
+      item.name.toLowerCase().includes(searchQuery.toLowerCase());
 
     return range_hotel && searchMatch;
   });
@@ -66,7 +66,7 @@ const HotelList = ({ params }) => {
           <section className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5  mx-auto">
               <p className="my-5">Available Hotels : 100</p>
-              <div className="-my-8 divide-y-2 divide-gray-100">
+              <div className="mb-4 divide-y-2 divide-gray-100">
                 {filteredItems?.map((dt) => (
                   <div
                     key={dt.id}
@@ -80,7 +80,7 @@ const HotelList = ({ params }) => {
                       />
                     </div>
                     <div className="md:flex-grow mx-5 flex-col space-y-14">
-                      <Link href={`/hotels/${dt.id}`}>
+                      <div>
                         <h2 className="text-xl font-medium text-gray-900 title-font mb-2">
                           {dt.name}
                         </h2>
@@ -104,7 +104,7 @@ const HotelList = ({ params }) => {
                             )
                           )}
                         </p>
-                      </Link>
+                      </div>
                       <p className="leading-relaxed text-sm">
                         {dt.address}
                         <br />
@@ -118,9 +118,12 @@ const HotelList = ({ params }) => {
                           </p>
                         </div>
                         <div>
-                          <button className="btn text-white btn-outline bg-indigo-600 hover:bg-blue-900">
-                            See Availability
-                          </button>
+                          <Link
+                            className="btn text-white btn-outline bg-indigo-600 hover:bg-blue-900"
+                            href={`/hotel/${dt.id}`}
+                          >
+                            See Availability <BsArrowUpRight />
+                          </Link>
                         </div>
                       </div>
                     </div>

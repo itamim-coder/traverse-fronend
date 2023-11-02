@@ -4,20 +4,21 @@ import { DateRange } from "react-date-range";
 import { useEffect, useRef, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { format } from "date-fns";
+import { addHours, format } from "date-fns";
 
-// import { useAppDispatch } from "@/redux/hooks";
-// import { setSearchParameters } from "@/redux/features/searchSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { setSearchParameters } from "@/redux/features/searchSlice";
 import { useRouter } from "next/navigation";
-// import { useGetLocationQuery } from "@/redux/api/locationApi";
+
 import { FaLocationDot } from "react-icons/fa6";
+import { useGetLocationQuery } from "@/redux/api/locationApi";
 const Search = () => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: addHours(new Date(), 12),
+      endDate: addHours(new Date(), 13),
       key: "selection",
     },
   ]);
@@ -27,7 +28,7 @@ const Search = () => {
     children: 0,
     room: 1,
   });
-  //   const { data: locations, isLoading } = useGetLocationQuery(undefined);
+  const { data: locations, isLoading } = useGetLocationQuery(undefined);
   // const { user } = useContext(AuthContext);
 
   const handleOption = (name: any, operation: any) => {
@@ -38,16 +39,17 @@ const Search = () => {
       };
     });
   };
-  //   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   // const { dispatch } = useContext(SearchContext);
   const router = useRouter();
   const handleSearch = () => {
-    // const selectedLocation = locations.find(
-    //   (location) => location.name === destination
-    // );
+    const selectedLocation = locations.find(
+      (location) => location.name === destination
+    );
+    console.log(dates)
     const serializedDates = dates.map((dateRange) => ({
-      startDate: dateRange.startDate.toISOString(),
-      endDate: dateRange.endDate.toISOString(),
+      startDate: new Date(dateRange.startDate).toISOString(),// Remove 'Z' to keep the original time zone offset
+      endDate: new Date(dateRange.endDate).toISOString(),// Remove 'Z' to keep the original time zone offset
       key: dateRange.key,
     }));
 
@@ -56,16 +58,16 @@ const Search = () => {
       children: options.children,
       room: options.room,
     };
+console.log(serializedDates)
+    dispatch(
+      setSearchParameters({
+        destination,
+        dates: serializedDates,
+        options: serializedOptions,
+      })
+    );
 
-    // dispatch(
-    // //   setSearchParameters({
-    // //     destination,
-    // //     dates: serializedDates,
-    // //     options: serializedOptions,
-    // //   })
-    // );
-
-    // router.push(`/search-hotel/${selectedLocation.id}`);
+    // router.push(`/hotel-list/${selectedLocation.id}`);
   };
 
   const dateRangeRef = useRef(null);
@@ -109,11 +111,11 @@ const Search = () => {
               >
                 <FaLocationDot />
                 <option value="">Select your destination</option>
-                {/* {locations?.map((location) => (
+                {locations?.map((location) => (
                   <option key={location.id} value={location.name}>
                     {location.name}
                   </option>
-                ))} */}
+                ))}
               </select>
             </div>
           </div>
