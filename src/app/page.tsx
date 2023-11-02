@@ -12,7 +12,7 @@ function Home() {
   return (
     <RootLayout>
       <NavBar />
-      <div>
+      <div className="bg-background">
         <Hero></Hero>
         <IntroOne />
         <FeaturedLocation />

@@ -146,7 +146,7 @@ console.log(serializedDates)
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/3 flex items-center space-x-4">
+          <div className="w-full md:w-1/3 flex items-center ">
             <div className="relative" ref={optionsRef}>
               <span
                 onClick={() => setOpenOptions(!openOptions)}
@@ -206,7 +206,7 @@ console.log(serializedDates)
                       </button>
                       <span className="text-gray-700">{options.room}</span>
                       <button
-                        className="text-gray-700 hover:text-blue-500"
+                        className="text-gray-700 ml-2 hover:text-blue-500"
                         onClick={() => handleOption("room", "i")}
                       >
                         +

@@ -13,7 +13,7 @@ const HotelDetails = ({ params }: any) => {
 
   return (
     <div>
-      <div className="p-20 ">
+      <div className="p-20 bg-background">
         <div className="flex justify-between">
           <div>
             <div className="flex items-center">
@@ -83,7 +83,7 @@ const HotelDetails = ({ params }: any) => {
 
           {hotelData?.rooms.map((room) => (
             <>
-              <div className="border my-2 p-5">
+              <div className="border my-2 p-5 bg-white rounded">
                 <p className="text-xl mb-2">{room.name} </p>
 
                 <div>
