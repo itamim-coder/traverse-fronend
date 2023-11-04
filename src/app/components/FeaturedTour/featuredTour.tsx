@@ -4,6 +4,7 @@ import {
   useGetAvailableTourQuery,
   useGetUpcomingTourQuery,
 } from "@/redux/api/tourApi";
+import Link from "next/link";
 import React from "react";
 import { BiSolidTimeFive } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
@@ -56,9 +57,9 @@ const FeaturedTour = () => {
                       </p>
                     </div>
                     <div className="mt-auto flex justify-between">
-                      <button className="btn btn-sm btn-outline hover:bg-CC584A">
+                      <Link href={`/tour/${tour.id}`} className="btn btn-sm btn-outline hover:bg-CC584A">
                         Details
-                      </button>
+                      </Link>
                       <button className="btn btn-sm btn-outline hover:bg-CC584A">
                         Book
                       </button>

@@ -1,15 +1,77 @@
 "use client";
 import Room from "@/app/components/Rooms/Rooms";
 import { useHotelDetailsQuery } from "@/redux/api/hotelApi";
-import React from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { addHours, format } from "date-fns";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; //
+import { setDateRange, setOption } from "@/redux/Features/searchSlice";
 
 const HotelDetails = ({ params }: any) => {
   const { data: hotelData, isLoading: loading } = useHotelDetailsQuery(
     params?.id
   );
 
-  console.log(hotelData);
+  const [openDate, setOpenDate] = useState(false);
+  const [dates, setDates] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+  const [openOptions, setOpenOptions] = useState(false);
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+
+  const handleOption = (name: any, operation: any) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+      };
+    });
+  };
+  const dispatch = useAppDispatch();
+  // const { dispatch } = useContext(SearchContext);
+  const router = useRouter();
+  const handleSearch = () => {
+    // const selectedLocation = locations.find(
+    //   (location) => location.name === destination
+    // );
+    console.log(dates);
+    const serializedDates = dates.map((dateRange) => ({
+      startDate: new Date(dateRange.startDate).toISOString(), // Remove 'Z' to keep the original time zone offset
+      endDate: new Date(dateRange.endDate).toISOString(), // Remove 'Z' to keep the original time zone offset
+      key: dateRange.key,
+    }));
+
+    const serializedOptions = {
+      adult: options.adult,
+      children: options.children,
+      room: options.room,
+    };
+    console.log(serializedDates);
+    dispatch(
+      setDateRange({
+        dates: serializedDates,
+      })
+    );
+    dispatch(
+      setOption({
+        options: serializedOptions,
+      })
+    );
+
+    // router.push(`/hotel-list/${selectedLocation.id}`);
+  };
 
   return (
     <div>
@@ -65,18 +127,130 @@ const HotelDetails = ({ params }: any) => {
             ))}
           </div>
         </div>
-        <div className="my-4">
-          <p className="text-xl mb-2">Overview</p>
+        <div className="my-4 flex justify-between">
+          <div className="w-3/5 ">
+            <p className="text-xl mb-2">Overview</p>
 
-          <p>
-            You can directly book the best price if your travel dates are
-            available, all discounts are already included. In the following
-            house description you will find all information about our listing.
-            2-room terraced house on 2 levels. Comfortable and cosy furnishings:
-            1 room with 1 french bed and radio. Shower, sep. WC. Upper floor:
-            (steep stair) living/dining room with 1 sofabed (110 cm, length 180
-            cm), TV. Exit to the balcony. Small kitchen (2 hot plates, oven,
-          </p>
+            <p>
+              You can directly book the best price if your travel dates are
+              available, all discounts are already included. In the following
+              house description you will find all information about our listing.
+              2-room terraced house on 2 levels. Comfortable and cosy
+              furnishings: 1 room with 1 french bed and radio. Shower, sep. WC.
+              Upper floor: (steep stair) living/dining room with 1 sofabed (110
+              cm, length 180 cm), TV. Exit to the balcony. Small kitchen (2 hot
+              plates, oven,
+            </p>
+          </div>
+          <div className="bg-white w-1.5/5 p-4">
+            <div>
+              <p className="text-center">Select Dates</p>
+              <div className="w-full  mb-4">
+                <div className="relative">
+                  <span
+                    onClick={() => setOpenDate(!openDate)}
+                    className="block cursor-pointer border text-black px-4 py-3 rounded-sm focus:outline-none  focus:ring-blue-500"
+                  >
+                    {`${format(dates[0].startDate, "MM/dd/yyyy")} - ${format(
+                      dates[0].endDate,
+                      "MM/dd/yyyy"
+                    )}`}
+                  </span>
+                  {openDate && (
+                    <DateRange
+                      editableDateInputs={true}
+                      onChange={(item) => {
+                        setDates([item.selection]);
+                      }}
+                      moveRangeOnFirstSelection={false}
+                      ranges={dates}
+                      className="absolute left-0 mt-2 bg-white p-2 rounded-md shadow-md z-10"
+                      minDate={new Date()}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="w-full  flex items-center ">
+                <div className="relative">
+                  <span
+                    onClick={() => setOpenOptions(!openOptions)}
+                    className="block border cursor-pointer text-black px-4 py-3 rounded-sm focus:outline-none focus:ring focus:ring-blue-500"
+                  >
+                    {`${options.adult} Adult · ${options.children} Children · ${options.room} Room`}
+                  </span>
+                  {openOptions && (
+                    <div className="absolute left-0 mt-2 bg-white p-4 rounded-md shadow-md z-10 w-full">
+                      <div className="mb-4 ">
+                        <span className="text-gray-700">Adult</span>
+                        <div className="flex justify-around space-x-4">
+                          <button
+                            disabled={options.adult <= 1}
+                            className="text-gray-700 hover:text-blue-500"
+                            onClick={() => handleOption("adult", "d")}
+                          >
+                            -
+                          </button>
+                          <span className="text-gray-700">{options.adult}</span>
+                          <button
+                            className="text-gray-700 hover:text-blue-500"
+                            onClick={() => handleOption("adult", "i")}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mb-4 ">
+                        <span className="text-gray-700">Children</span>
+                        <div className="flex justify-around items-center space-x-4">
+                          <button
+                            disabled={options.children <= 0}
+                            className="text-gray-700 hover:text-blue-500"
+                            onClick={() => handleOption("children", "d")}
+                          >
+                            -
+                          </button>
+                          <span className="text-gray-700">
+                            {options.children}
+                          </span>
+                          <button
+                            className="text-gray-700 hover:text-blue-500"
+                            onClick={() => handleOption("children", "i")}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div className="">
+                        <span className="text-gray-700">Room</span>
+                        <div className="flex justify-around items-center space-x-4">
+                          <button
+                            disabled={options.room <= 1}
+                            className="text-gray-700 hover:text-blue-500"
+                            onClick={() => handleOption("room", "d")}
+                          >
+                            -
+                          </button>
+                          <span className="text-gray-700">{options.room}</span>
+                          <button
+                            className="text-gray-700 ml-2 hover:text-blue-500"
+                            onClick={() => handleOption("room", "i")}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button
+                className="text-white items-center mt-3 bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:ring-blue-500"
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+            </div>
+          </div>
         </div>
         <div>
           <p className="text-2xl">Available Rooms</p>

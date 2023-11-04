@@ -1,5 +1,7 @@
-
-import { useGetSingleRoomQuery, useReserveAroomMutation } from "@/redux/api/roomApi";
+import {
+  useGetSingleRoomQuery,
+  useReserveAroomMutation,
+} from "@/redux/api/roomApi";
 import { useAppSelector } from "@/redux/hooks";
 import React, { useState } from "react";
 
@@ -79,34 +81,32 @@ const Room = ({ params }: any) => {
     }
   };
   return (
-    <div className="grid grid-cols-2 gap-2">
-      {roomData?.RoomNumber?.map((rd: any) => (
-        <div
-          key={rd.id}
-          className="border p-4  "
-        >
-          <div>
-            <h1 className=" font-bold">Room No: {rd.number}</h1>
-          
- 
-            <label className="block text-gray-500">
-              Availability: {isAvailable(rd) ? "Available" : "Not Available"}
-            </label>
+    <>
+      <div className="grid grid-cols-2 gap-2">
+        {roomData?.RoomNumber?.map((rd: any) => (
+          <div key={rd.id} className="border p-4  ">
+            <div>
+              <h1 className=" font-bold">Room No: {rd.number}</h1>
+
+              <label className="block text-gray-500">
+                Availability: {isAvailable(rd) ? "Available" : "Not Available"}
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                value={rd.id}
+                onChange={handleSelect}
+                disabled={!isAvailable(rd)}
+              />
+              <label className="text-gray-600">Select</label>
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              value={rd.id}
-              onChange={handleSelect}
-              disabled={!isAvailable(rd)}
-            />
-            <label className="text-gray-600">Select</label>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <button
         onClick={handleClick}
-        className={`w-full py-3 rounded-lg text-white ${
+        className={`w-1/2 mt-2  py-3 rounded-lg text-white ${
           selectedRooms.length === 0
             ? "bg-gray-300 cursor-not-allowed"
             : "bg-blue-500 hover:bg-blue-600"
@@ -115,7 +115,7 @@ const Room = ({ params }: any) => {
       >
         Reserve Now!
       </button>
-    </div>
+    </>
   );
 };
 

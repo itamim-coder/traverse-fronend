@@ -1,7 +1,7 @@
 "use client";
 
-import { DateRange } from "react-date-range";
 import { useEffect, useRef, useState } from "react";
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { addHours, format } from "date-fns";
@@ -68,7 +68,7 @@ console.log(serializedDates)
       })
     );
 
-    // router.push(`/hotel-list/${selectedLocation.id}`);
+    router.push(`/hotel-list/${selectedLocation.id}`);
   };
 
   const dateRangeRef = useRef(null);

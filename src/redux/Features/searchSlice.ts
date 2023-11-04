@@ -1,8 +1,8 @@
 // searchSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  destination: '',
+  destination: "",
   dates: [],
   options: {
     adult: 1,
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const searchSlice = createSlice({
-  name: 'search',
+  name: "search",
   initialState,
   reducers: {
     setSearchParameters: (state, action) => {
@@ -20,9 +20,15 @@ const searchSlice = createSlice({
       state.dates = action.payload.dates;
       state.options = action.payload.options;
     },
+    setDateRange: (state, action) => {
+      state.dates = action.payload.dates;
+    },
+    setOption: (state, action) => {
+      state.options = action.payload.options;
+    },
   },
 });
 
-export const { setSearchParameters } = searchSlice.actions;
+export const { setSearchParameters, setDateRange, setOption } = searchSlice.actions;
 
 export default searchSlice.reducer;
