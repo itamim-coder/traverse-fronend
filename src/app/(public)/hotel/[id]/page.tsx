@@ -1,5 +1,5 @@
 "use client";
-import Room from "@/app/components/Rooms/Rooms";
+
 import { useHotelDetailsQuery } from "@/redux/api/hotelApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,8 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; //
 import { setDateRange, setOption } from "@/redux/Features/searchSlice";
+import Room from "@/app/components/Rooms/Rooms";
+import Link from "next/link";
 
 const HotelDetails = ({ params }: any) => {
   const { data: hotelData, isLoading: loading } = useHotelDetailsQuery(
@@ -301,6 +303,7 @@ const HotelDetails = ({ params }: any) => {
                         <td>
                           <Room params={room}></Room>{" "}
                         </td>
+                        <td> <button><Link href="/tour/booking">reserve</Link></button></td>
                         <th>
                           {/* <button
                             onClick={handleClick}

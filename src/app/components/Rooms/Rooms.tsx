@@ -1,19 +1,23 @@
+import { setBookingInfo } from "@/redux/Features/bookingSlice";
 import {
   useGetSingleRoomQuery,
   useReserveAroomMutation,
 } from "@/redux/api/roomApi";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Room = ({ params }: any) => {
-  const [selectedRooms, setSelectedRooms] = useState([]);
-
+  const [selectedRooms, setSelectedRooms] = useState<
+    { id; price; roomNumber }[]
+  >([]);
+  console.log(params);
   const { data: roomData, isLoading: loading } = useGetSingleRoomQuery(
     params?.id
   );
-
-  const { dates } = useAppSelector((state) => state.search);
-
+  console.log(roomData);
+  const { dates, options } = useAppSelector((state) => state.search);
+  const router = useRouter();
   const getDatesInRange = (
     startDate: string | number | Date,
     endDate: string | number | Date
@@ -44,41 +48,81 @@ const Room = ({ params }: any) => {
       );
     });
   };
+  console.log(selectedRooms);
+
 
   const handleSelect = (e: { target: { checked: any; value: any } }) => {
     const checked = e.target.checked;
     const value = e.target.value;
-    setSelectedRooms(
-      checked
-        ? [...selectedRooms, value]
-        : selectedRooms.filter((item: any) => item !== value)
-    );
-  };
-  const [reserveAroom] = useReserveAroomMutation();
-  const handleClick = async () => {
-    try {
-      await Promise.all(
-        selectedRooms.map(async (roomId) => {
-          const unavailableDates = alldates.map((date) =>
-            new Date(date).toISOString()
-          );
 
-          const roomData = {
-            unavailableDates, // Add the unavailableDates property
-          };
+    // Find the selected room by ID
+    const selectedRoom = roomData?.RoomNumber.find((room) => room.id === value);
 
-          const updatedData = await reserveAroom({ id: roomId, roomData });
-          console.log(updatedData);
-          // const res = axios.put(`/rooms/availability/${roomId}`, {
-          //   dates: alldates,
-          // });
-
-          // return res.data;
-        })
-      );
-    } catch (err) {
-      console.log(err);
+    if (checked && selectedRoom) {
+      // Add the selected room to the array along with its information, including room number
+      setSelectedRooms([
+        ...selectedRooms,
+        {
+          id: selectedRoom.id,
+          price: roomData.price,
+          roomNumber: selectedRoom.number, // Include room number
+        },
+      ]);
+    } else {
+      // Remove the room if it's unchecked
+      setSelectedRooms(selectedRooms.filter((room) => room.id !== value));
     }
+  };
+  console.log(selectedRooms);
+  const [reserveAroom] = useReserveAroomMutation();
+  const dispatch = useAppDispatch();
+  const handleReserve = async () => {
+    console.log(alldates);
+    console.log(options);
+
+    const days = alldates.length - 1;
+
+    let totalPrice = 0;
+    if (days > 0) {
+      selectedRooms.forEach((room) => {
+        totalPrice += room.price * days;
+      });
+    }
+    console.log(totalPrice);
+    dispatch(
+      setBookingInfo({
+        days,
+        roomInfo: roomData,
+        selectedRooms: selectedRooms,
+        totalAmount: totalPrice,
+        dates: alldates,
+        options: options,
+      })
+    );
+    router.push(`/hotel/booking/${params.name}`);
+    // try {
+    //   await Promise.all(
+    //     selectedRooms.map(async (roomId) => {
+    //       const unavailableDates = alldates.map((date) =>
+    //         new Date(date).toISOString()
+    //       );
+
+    //       const roomData = {
+    //         unavailableDates, // Add the unavailableDates property
+    //       };
+
+    //       const updatedData = await reserveAroom({ id: roomId, roomData });
+    //       console.log(updatedData);
+    //       // const res = axios.put(`/rooms/availability/${roomId}`, {
+    //       //   dates: alldates,
+    //       // });
+
+    //       // return res.data;
+    //     })
+    //   );
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   return (
     <>
@@ -105,7 +149,7 @@ const Room = ({ params }: any) => {
         ))}
       </div>
       <button
-        onClick={handleClick}
+        onClick={handleReserve}
         className={`w-1/2 mt-2  py-3 rounded-lg text-white ${
           selectedRooms.length === 0
             ? "bg-gray-300 cursor-not-allowed"

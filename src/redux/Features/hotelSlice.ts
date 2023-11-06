@@ -1,4 +1,4 @@
-// filtersSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IHotelFilter {

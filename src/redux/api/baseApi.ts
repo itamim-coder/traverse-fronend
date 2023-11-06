@@ -22,5 +22,6 @@ export const baseApi = createApi({
     "getUpcomingTour",
     "singleTour",
     "createHotel",
+    "bookingHotel"
   ],
 });
