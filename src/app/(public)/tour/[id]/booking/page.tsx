@@ -1,8 +1,8 @@
 "use client";
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
-import { useBookHotelMutation } from "@/redux/api/bookingApi";
-import { useReserveAroomMutation } from "@/redux/api/roomApi";
+import { useBookTourMutation } from "@/redux/api/bookingApi";
+
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 
@@ -14,77 +14,22 @@ type FormValues = {
 };
 const HotelBooking = () => {
   const router = useRouter();
-  const { dates, days, selectedRooms, totalAmount, options, roomInfo } =
-    useAppSelector((state) => state.hotelBooking);
-  const lastDay = dates.length - 1;
-  const date1 = new Date(dates[0]);
-  const date2 = new Date(dates[lastDay]);
-
-  const checkin = date1.toLocaleDateString();
-  const checkout = date2.toLocaleDateString();
-  console.log(checkin);
-  // console.log(window.history);
-  // const hotelId = console.log(roomInfo?.hotel?.id);
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     e.preventDefault();
-  //     e.returnValue = "";
-  //     // alert("previous url is: " + window.history);
-  //     // Use the Next.js router to navigate back to the previous page
-  //     router.push(`/hotel/${roomInfo?.hotel?.id}`); //
-  //     // history.back()
-  //   };
-
-  //   // Add the event listener for beforeunload to capture browser refresh
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     // Clean up the event listener when the component unmounts
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [router]);
-
-  // if (!days || days <= 0) {
-  //   // alert("previous url is: " + window.history.previous.href);
-  //   // Redirect to the previous page or any other desired page
-  //   // history.back() // Change '/previous-page' to your desired URL
-  //   return null; // You can also return a loading state or an error message if needed
-  // }
-  const [hotelBooking] = useBookHotelMutation();
-  const [reserveAroom] = useReserveAroomMutation();
+  const { totalAmount, options, tourInfo } = useAppSelector(
+    (state) => state.tourBooking
+  );
+const [tourBooking] = useBookTourMutation();
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       //   const res = await userLogin({ ...data }).unwrap();
       data.userId = "764fc795-dd1b-4dda-8e45-63814bae728c";
-      data.hotelBooks = {
-        dates,
-        days,
-        selectedRooms,
+      data.tourBooks = {
+        tourInfo,
         totalAmount,
         options,
-        roomInfo,
       };
       console.log(data);
-      // const res = await hotelBooking({ ...data }).unwrap();
-      // console.log(res);
-
-      selectedRooms.map(async (roomId) => {
-        const unavailableDates = dates.map((date) =>
-          new Date(date).toISOString()
-        );
-
-        const roomData = {
-          unavailableDates, // Add the unavailableDates property
-        };
-console.log(roomId)
-        const updatedData = await reserveAroom({ id: roomId?.id, roomData });
-        console.log(updatedData);
-        // const res = axios.put(`/rooms/availability/${roomId}`, {
-        //   dates: alldates,
-        // });
-
-        // return res.data;
-      });
+      const res = await tourBooking({ ...data }).unwrap();
+      console.log(res);
     } catch (err) {}
   };
   return (
@@ -96,8 +41,8 @@ console.log(roomId)
               <p>Your Booking Details</p>
               <div className="flex pt-5 justify-between">
                 <div>
-                  <p> {roomInfo?.hotel?.name}</p>
-                  <p>{options.adult} Adult</p>
+                  <p> {tourInfo?.title}</p>
+                  <p>{options.member} Member</p>
                 </div>
                 <div>
                   <div className="mask  w-20 h-20">
@@ -110,14 +55,10 @@ console.log(roomId)
                 </div>
               </div>
               <div>
-                {roomInfo?.name}
+                {tourInfo?.starting_date}
                 <br />
-                Room Number:
-                {selectedRooms?.map((room) => (
-                  <div key={room.id}>
-                    <p>{room.roomNumber}</p>
-                  </div>
-                ))}
+
+                {tourInfo?.departure}
               </div>
             </div>
           </div>
@@ -185,7 +126,10 @@ console.log(roomId)
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
-                      {roomInfo?.name} x {selectedRooms.length}
+                      <p>
+                        {" "}
+                        {tourInfo?.title} X {options.member}
+                      </p>
                     </th>
 
                     <td className="px-6 py-4">{totalAmount}</td>
@@ -204,11 +148,11 @@ console.log(roomId)
             </div>
             <div>
               <p className="font-semibold text-gray-900 text-base px-6 py-3">
-                Date: {checkin} to {checkout} <br />{" "}
-                <span className="text-sm">({days}/nights)</span>
+                {/* Date: {checkin} to {checkout} <br />{" "} */}
+                {/* <span className="text-sm">({days}/nights)</span> */}
               </p>
               <p className="font-semibold text-gray-900 text-base px-6 py-3">
-                Room: {roomInfo.name}
+                {/* Room: {roomInfo.name} */}
               </p>
             </div>
           </div>

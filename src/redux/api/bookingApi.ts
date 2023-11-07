@@ -11,6 +11,14 @@ export const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["bookingHotel"],
     }),
+    bookTour: build.mutation({
+      query: (data) => ({
+        url: `${BOOKING_URL}/tour`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["bookingTour"],
+    }),
     // getHotels: build.query({
     //   query: () => ({
     //     url: `${HOTEL_URL}`,
@@ -23,5 +31,6 @@ export const bookingApi = baseApi.injectEndpoints({
 });
 
 export const {
-useBookHotelMutation
+useBookHotelMutation,
+useBookTourMutation
 } = bookingApi;

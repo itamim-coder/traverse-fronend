@@ -99,7 +99,7 @@ const Room = ({ params }: any) => {
         options: options,
       })
     );
-    router.push(`/hotel/booking/${params.name}`);
+    router.push( `/hotel/${params.id}/booking`);
     // try {
     //   await Promise.all(
     //     selectedRooms.map(async (roomId) => {
