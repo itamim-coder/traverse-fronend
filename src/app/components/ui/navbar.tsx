@@ -73,6 +73,7 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+      <Link href={"/login"} className="btn btn-outline btn-info">Login</Link>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">

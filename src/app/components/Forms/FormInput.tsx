@@ -11,6 +11,7 @@ interface IInput {
   placeholder?: string;
   validation?: object;
   label?: string;
+  className? : string,
 }
 
 const FormInput = ({
@@ -22,6 +23,7 @@ const FormInput = ({
   placeholder,
   validation,
   label,
+  className,
 }: IInput) => {
   const { control } = useFormContext();
 
@@ -38,7 +40,7 @@ const FormInput = ({
           type === "password" ? (
             <input
               type={type}
-              className="input input-bordered w-full max-w-xs" 
+              className={className} 
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
@@ -46,7 +48,7 @@ const FormInput = ({
           ) : (
             <input
               type={type}
-              className="input input-bordered w-full max-w-xs" 
+              className={className} 
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
