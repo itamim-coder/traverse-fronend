@@ -1,30 +1,66 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import Form from "../Forms/form";
 import FormInput from "../Forms/FormInput";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { setEmail } from "@/redux/Features/userSlice";
+import { useUserSignupMutation } from "@/redux/api/authApi";
+import { useSendOtpMutation } from "@/redux/api/otpApi";
 
 type FormValues = {
+  name: string;
   email: string;
   contactNo: string;
   password: string;
 };
 const SignupPage = () => {
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const [userSignup] = useUserSignupMutation();
+  const [sendOtp] = useSendOtpMutation();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       console.log(data);
-    } catch (err) {}
+      const email = data.email
+      const res = await userSignup({ ...data }).unwrap();
+      console.log(res);
+      if (res) {
+        dispatch(
+          setEmail({
+            email: email,
+          })
+
+        );
+        const emailres = await sendOtp({ email }).unwrap();
+        console.log(emailres);
+        router.push("/verify");
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-white text-black">
+        <div className="w-full max-w-md p-8 rounded-xl bg-white text-black">
           <h1 className="text-2xl font-bold text-center">Let’s Get Started</h1>
           <p>Create an account and get the Deals & Promotions news</p>
           <Form submitHandler={onSubmit}>
-            <div >
+            <div>
+              <FormInput
+                name="name"
+                type="text"
+                size="large"
+                label="User Name"
+                className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
+              />
+            </div>
+            <div>
               <FormInput
                 name="email"
                 type="email"
@@ -33,10 +69,10 @@ const SignupPage = () => {
                 className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
               />
             </div>
-            <div className="my-4">
+            <div className="my-2">
               <FormInput
                 name="contactNo"
-                type="text"
+                type="number"
                 size="large"
                 label="Phone Number"
                 className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
@@ -51,6 +87,7 @@ const SignupPage = () => {
                 className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
               />
             </div>
+
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
