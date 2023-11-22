@@ -4,10 +4,10 @@ import { token } from "@/app/services/auth.services";
 import { useUserHotelQuery, useUserTourQuery } from "@/redux/api/bookingApi";
 import React from "react";
 
-const HotelBooking = () => {
-  const { data: hotelData } = useUserHotelQuery(undefined);
+const TourBooking = () => {
+
   const { data: tourData } = useUserTourQuery(undefined);
-  console.log(hotelData);
+  console.log(tourData);
 
   return (
     <div>
@@ -25,12 +25,12 @@ const HotelBooking = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {hotelData?.map((dt, index) => (
+            {tourData?.map((dt, index) => (
               <tr>
                 <th>{index+1}</th>
-                <td>{dt?.customer_name}</td>
-                <td>{dt?.hotelBooks?.days}</td>
-                <td>{dt?.hotelBooks?.totalAmount}</td>
+                <td>{dt?.tourBooks?.tourInfo?.title}</td>
+                <td>{dt?.tourBooks?.tourInfo?.duration}</td>
+                <td>{dt?.tourBooks?.totalAmount}</td>
                 <td>{dt?.status}</td>
               </tr>
             ))}
@@ -42,4 +42,4 @@ const HotelBooking = () => {
   );
 };
 
-export default HotelBooking;
+export default TourBooking;

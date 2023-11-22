@@ -4,6 +4,7 @@ import { Link } from "react-scroll";
 import React, { useState } from "react";
 import Image from "next/image";
 import HotelBooking from "@/app/components/hotelBooking/hotelBooking";
+import TourBooking from "@/app/components/tourBooking/tourBooking";
 
 const BookingPage = () => {
   const [activeSection, setActiveSection] = useState("hotel");
@@ -64,7 +65,9 @@ const BookingPage = () => {
                 style={{
                   display: activeSection === "tour" ? "block" : "none",
                 }}
-              ></div>
+              >
+                <TourBooking />
+              </div>
             </div>
           </div>
         </div>

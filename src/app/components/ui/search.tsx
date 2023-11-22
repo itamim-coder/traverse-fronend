@@ -47,10 +47,10 @@ const Search = () => {
     const selectedLocation = locations.find(
       (location) => location.name === destination
     );
-    console.log(dates)
+    console.log(dates);
     const serializedDates = dates.map((dateRange) => ({
-      startDate: new Date(dateRange.startDate).toISOString(),// Remove 'Z' to keep the original time zone offset
-      endDate: new Date(dateRange.endDate).toISOString(),// Remove 'Z' to keep the original time zone offset
+      startDate: new Date(dateRange.startDate).toISOString(), // Remove 'Z' to keep the original time zone offset
+      endDate: new Date(dateRange.endDate).toISOString(), // Remove 'Z' to keep the original time zone offset
       key: dateRange.key,
     }));
 
@@ -59,7 +59,7 @@ const Search = () => {
       children: options.children,
       room: options.room,
     };
-console.log(serializedDates)
+    console.log(serializedDates);
     dispatch(
       setSearchParameters({
         destination,
@@ -102,9 +102,9 @@ console.log(serializedDates)
 
   return (
     <div className="bg-slate-200 py-5 rounded-full bg-opacity-25">
-      <div className="container mx-auto">
-        <div className="flex flex-wrap items-center justify-between">
-          <div className="w-full md:w-1/3 mb-4 md:mb-0">
+      <div className="">
+        <div className="flex gap-3  items-center justify-between">
+          <div className="w-full mb-4 md:mb-0">
             <div className="relative ">
               <select
                 className="w-full px-4 py-3 text-white bg-gray-700 rounded-full focus:outline-none focus:ring focus:ring-blue-500"
@@ -121,7 +121,7 @@ console.log(serializedDates)
             </div>
           </div>
 
-          <div className="w-full md:w-1/3 mb-4 md:mb-0">
+          <div className="w-full  mb-4 md:mb-0">
             <div className="relative">
               <span
                 onClick={() => setOpenDate(!openDate)}
@@ -147,11 +147,12 @@ console.log(serializedDates)
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/3 flex items-center ">
+          <div className="w-full  items-center ">
             <div className="relative" ref={optionsRef}>
               <span
                 onClick={() => setOpenOptions(!openOptions)}
-                className="block cursor-pointer text-white px-4 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
+                className="block cursor-pointer text-white 
+                 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
               >
                 {`${options.adult} Adult · ${options.children} Children · ${options.room} Room`}
               </span>
@@ -217,13 +218,13 @@ console.log(serializedDates)
                 </div>
               )}
             </div>
-            <button
-              className="text-white bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:ring-blue-500"
-              onClick={handleSearch}
-            >
-              Search
-            </button>
           </div>
+          <button
+            className="text-white bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:ring-blue-500"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useVerifyOtpMutation } from "@/redux/api/otpApi";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import React, { useState, useRef } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Verify = () => {
   const [verificationCode, setVerificationCode] = useState("");
@@ -27,14 +28,23 @@ const Verify = () => {
     }
   };
   const [verifyOtp] = useVerifyOtpMutation();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      otp: verificationCode,
-      email: Email,
-    };
-    verifyOtp(data);
-    console.log(data);
+    try {
+      const data = {
+        otp: verificationCode,
+        email: Email,
+      };
+      const res = verifyOtp({...data}).unwrap();
+
+      console.log(res);
+      if (res) {
+        toast("Verified Successfully, Login Now");
+
+        router.push("/login");
+      }
+    } catch (err) {}
   };
   return (
     <>
@@ -89,6 +99,26 @@ const Verify = () => {
           </div>
         </div>
       </div>
+      <Toaster
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 3000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </>
   );
 };

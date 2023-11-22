@@ -1,6 +1,7 @@
 "use client";
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
+import { getUserInfo } from "@/app/services/auth.services";
 import { useBookHotelMutation } from "@/redux/api/bookingApi";
 import { useReserveAroomMutation } from "@/redux/api/roomApi";
 import { useAppSelector } from "@/redux/hooks";
@@ -54,10 +55,12 @@ const HotelBooking = () => {
   }
   const [hotelBooking] = useBookHotelMutation();
   const [reserveAroom] = useReserveAroomMutation();
+  const { userId:loginUserId } = getUserInfo();
+  console.log(loginUserId)
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       //   const res = await userLogin({ ...data }).unwrap();
-      data.userId = "764fc795-dd1b-4dda-8e45-63814bae728c";
+      data.userId = loginUserId
       data.hotelBooks = {
         dates,
         days,
@@ -67,8 +70,8 @@ const HotelBooking = () => {
         roomInfo,
       };
       console.log(data);
-      // const res = await hotelBooking({ ...data }).unwrap();
-      // console.log(res);
+      const res = await hotelBooking({ ...data }).unwrap();
+      console.log(res);
 
       selectedRooms.map(async (roomId) => {
         const unavailableDates = dates.map((date) =>
@@ -80,12 +83,12 @@ const HotelBooking = () => {
         };
         console.log(roomId);
         const updatedData = await reserveAroom({ id: roomId?.id, roomData });
-        console.log(updatedData);
+        // console.log(updatedData);
         // const res = axios.put(`/rooms/availability/${roomId}`, {
         //   dates: alldates,
         // });
 
-        // return res.data;
+        return res.data;
       });
     } catch (err) {}
   };

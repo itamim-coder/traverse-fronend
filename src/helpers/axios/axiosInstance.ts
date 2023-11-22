@@ -1,6 +1,8 @@
-// import { authKey } from "@/constants/storageKey";
+
+import { getFromLocalStorage } from "@/app/utils/local-storage";
+import { authKey } from "@/constants/storageKey";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
-// import { getFromLocalStorage } from "@/utils/local-storage";
+
 import axios from "axios";
 
 const instance = axios.create();
@@ -11,10 +13,11 @@ instance.defaults.timeout = 60000;
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
-    // const accessToken = getFromLocalStorage(authKey);
-    // if (accessToken) {
-    //     config.headers.Authorization = accessToken
-    // }
+    const accessToken = getFromLocalStorage(authKey);
+    if (accessToken) {
+        config.headers.Authorization = accessToken
+    }
+    console.log(accessToken)
     return config;
   }, function (error) {
     // Do something with request error
@@ -28,6 +31,7 @@ instance.interceptors.response.use(function (response) {
         data: response?.data?.data,
         meta: response?.data?.meta
     }
+    console.log(response)
     return responseObject;
 }, function (error) {
     const responseObject:IGenericErrorResponse = {
@@ -35,6 +39,7 @@ instance.interceptors.response.use(function (response) {
         message:error?.response?.data?.message || "Something went wrong",
         errorMessages:error?.response?.data?.message, 
     }
+    console.log(error)
     return responseObject;
     // return Promise.reject(error);
   });

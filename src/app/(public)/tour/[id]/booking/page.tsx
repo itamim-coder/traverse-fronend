@@ -1,6 +1,7 @@
 "use client";
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
+import { getUserInfo } from "@/app/services/auth.services";
 import { useBookTourMutation } from "@/redux/api/bookingApi";
 
 import { useAppSelector } from "@/redux/hooks";
@@ -17,11 +18,14 @@ const HotelBooking = () => {
   const { totalAmount, options, tourInfo } = useAppSelector(
     (state) => state.tourBooking
   );
-const [tourBooking] = useBookTourMutation();
+  const [tourBooking] = useBookTourMutation();
+  console.log(getUserInfo())
+  const { userId:loginUserId } = getUserInfo();
+console.log(loginUserId)
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       //   const res = await userLogin({ ...data }).unwrap();
-      data.userId = "764fc795-dd1b-4dda-8e45-63814bae728c";
+      data.userId = loginUserId;
       data.tourBooks = {
         tourInfo,
         totalAmount,

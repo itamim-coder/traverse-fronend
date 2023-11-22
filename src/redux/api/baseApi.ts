@@ -26,6 +26,9 @@ export const baseApi = createApi({
     "bookingTour",
     "signup",
     "sendOtp",
-    "verifyOtp"
+    "verifyOtp",
+    "getBookingHotel",
+    "getBookingTour",
+    "profile"
   ],
 });

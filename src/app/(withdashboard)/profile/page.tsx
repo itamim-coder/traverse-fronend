@@ -1,17 +1,18 @@
-import { Metadata } from 'next';
-import React from 'react';
+import ProfilePage from "@/app/components/profile/profile";
+import { Metadata } from "next";
+import React from "react";
 
 export const metadata: Metadata = {
-    title: "PROFILE | TRAVERSE",
-    description: "Profile Page",
-  };
-
-const ProfilePage = () => {
-    return (
-        <div>
-            <p>profile</p>
-        </div>
-    );
+  title: "PROFILE | TRAVERSE",
+  description: "Profile Page",
 };
 
-export default ProfilePage;
+const Profile = () => {
+  return (
+    <>
+      <ProfilePage />
+    </>
+  );
+};
+
+export default Profile;

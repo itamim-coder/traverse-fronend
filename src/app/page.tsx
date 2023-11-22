@@ -7,6 +7,8 @@ import IntroTwo from "./components/introSection/introTwo";
 import dynamic from "next/dynamic";
 import { FeaturedLocation } from "./components/FeaturedLocation/featuredLocation";
 import FeaturedTour from "./components/FeaturedTour/featuredTour";
+import Footer from "./components/ui/footer";
+import { Toaster } from "react-hot-toast";
 
 function Home() {
   return (
@@ -19,6 +21,8 @@ function Home() {
         <IntroTwo />
         <FeaturedTour />
       </div>
+      <Footer />
+      <Toaster />
     </RootLayout>
   );
 }
