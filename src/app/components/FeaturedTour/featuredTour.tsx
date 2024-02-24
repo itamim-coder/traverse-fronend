@@ -23,7 +23,7 @@ const FeaturedTour = () => {
       <div className="container mt-2 mx-auto p-4 md:p-0">
         <div className="grid grid-cols-3 ">
           <div className=" col-span-2 ">
-            {tourData?.map((tour) => (
+            {tourData?.map((tour: any) => (
               <>
                 <div className="flex mb-3 shadow-md bg-gray-100 border">
                   <div className="w-1/3">
@@ -57,7 +57,10 @@ const FeaturedTour = () => {
                       </p>
                     </div>
                     <div className="mt-auto flex justify-between">
-                      <Link href={`/tour/${tour.id}`} className="btn btn-sm btn-outline hover:bg-CC584A">
+                      <Link
+                        href={`/tour/${tour.id}`}
+                        className="btn btn-sm btn-outline hover:bg-CC584A"
+                      >
                         Details
                       </Link>
                       <button className="btn btn-sm btn-outline hover:bg-CC584A">
@@ -71,9 +74,11 @@ const FeaturedTour = () => {
           </div>
           <div className="ml-20">
             <div>
-              <h1 className="text-xl font-bold mb-3">Up Coming <br /> Tour</h1>
+              <h1 className="text-xl font-bold mb-3">
+                Up Coming <br /> Tour
+              </h1>
               <div className="">
-                {upcomingTours?.map((dt) => (
+                {upcomingTours?.map((dt: any) => (
                   <div className="bg-gray-100 mb-6 shadow-md">
                     <img
                       className="h-40 w-full object-cover"

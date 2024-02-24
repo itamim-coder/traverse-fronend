@@ -125,7 +125,7 @@ const Search = () => {
             <div className="relative">
               <span
                 onClick={() => setOpenDate(!openDate)}
-                className="block cursor-pointer text-white px-4 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
+                className="block text-nowrap cursor-pointer text-white px-4 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
               >
                 {`${format(dates[0].startDate, "MM/dd/yyyy")} - ${format(
                   dates[0].endDate,
