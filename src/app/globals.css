@@ -1,16 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
 
 @keyframes spin-slow {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .animate-spin-slow {
-    animation: spin-slow 20s linear infinite; /* Adjust the duration (3s) as needed */
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite; /* Adjust the duration (3s) as needed */
+}
+

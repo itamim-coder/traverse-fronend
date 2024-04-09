@@ -48,27 +48,33 @@ const Search = () => {
       (location) => location.name === destination
     );
     console.log(dates);
+    console.log(selectedLocation);
     const serializedDates = dates.map((dateRange) => ({
       startDate: new Date(dateRange.startDate).toISOString(), // Remove 'Z' to keep the original time zone offset
       endDate: new Date(dateRange.endDate).toISOString(), // Remove 'Z' to keep the original time zone offset
       key: dateRange.key,
     }));
-
-    const serializedOptions = {
-      adult: options.adult,
-      children: options.children,
-      room: options.room,
-    };
     console.log(serializedDates);
-    dispatch(
-      setSearchParameters({
-        destination,
-        dates: serializedDates,
-        options: serializedOptions,
-      })
-    );
+    console.log(serializedDates.length);
+    if (!selectedLocation) {
+      alert("error");
+    } else {
+      const serializedOptions = {
+        adult: options.adult,
+        children: options.children,
+        room: options.room,
+      };
 
-    router.push(`/hotel-list/${selectedLocation.id}`);
+      dispatch(
+        setSearchParameters({
+          destination,
+          dates: serializedDates,
+          options: serializedOptions,
+        })
+      );
+
+      router.push(`/hotel-list/${selectedLocation.id}`);
+    }
   };
 
   const dateRangeRef = useRef(null);

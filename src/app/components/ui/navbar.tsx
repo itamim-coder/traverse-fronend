@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { getUserInfo, removeUserInfo } from "@/app/services/auth.services";
 import { authKey } from "@/constants/storageKey";
@@ -9,7 +9,7 @@ import { CgProfile } from "react-icons/cg";
 
 const NavBar = () => {
   const { email } = getUserInfo();
-
+  console.log("navbar", email);
   const router = useRouter();
   const logOut = () => {
     removeUserInfo(authKey);
@@ -108,7 +108,9 @@ const NavBar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a onClick={logOut} key="logout">Logout</a>
+                  <a onClick={logOut} key="logout">
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>
