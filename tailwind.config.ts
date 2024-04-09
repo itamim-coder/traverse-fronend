@@ -7,6 +7,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      title: [" Reenie Beanie, cursive"],
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -14,8 +17,8 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        'background': '#F1F0E8',
-        'secondary' : '#ADC4CE',
+        background: "#F1F0E8",
+        secondary: "#ADC4CE",
       },
     },
   },

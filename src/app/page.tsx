@@ -9,6 +9,7 @@ import { FeaturedLocation } from "./components/FeaturedLocation/featuredLocation
 import FeaturedTour from "./components/FeaturedTour/featuredTour";
 import Footer from "./components/ui/footer";
 import { Toaster } from "react-hot-toast";
+import WhyUs from "./components/WhyUs/whyus";
 
 function Home() {
   return (
@@ -20,6 +21,7 @@ function Home() {
         <FeaturedLocation />
         <IntroTwo />
         <FeaturedTour />
+        <WhyUs />
       </div>
       <Footer />
       <Toaster />

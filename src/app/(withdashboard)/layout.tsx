@@ -1,7 +1,20 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import SideBar from "../components/ui/sidebar";
+import { isLoggedIn } from "../services/auth.services";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const userLoggedIn = isLoggedIn();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  console.log("userlog", userLoggedIn);
+  useEffect(() => {
+    if (!userLoggedIn) {
+      router.push("/login");
+    }
+    setIsLoading(true);
+  }, [router, isLoading]);
   return (
     <>
       <html lang="en">
