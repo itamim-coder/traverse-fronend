@@ -1,17 +1,16 @@
 "use client";
 
-
 import { useFormContext, Controller } from "react-hook-form";
 interface IInput {
   name: string;
   type?: string;
   size?: "large" | "small";
-  value?: string | string[] | undefined;
+  value?: string | string[] | FileList | undefined;
   id?: string;
   placeholder?: string;
   validation?: object;
   label?: string;
-  className? : string,
+  className?: string;
 }
 
 const FormInput = ({
@@ -40,16 +39,28 @@ const FormInput = ({
           type === "password" ? (
             <input
               type={type}
-              className={className} 
+              className={className}
               placeholder={placeholder}
               {...field}
               // autoComplete="false"
               value={value ? value : field.value}
             />
+          ) : type === "file" ? (
+            <>
+              <input
+                type={type}
+                className="file-input file-input-bordered file-input-primary w-full mt-3"
+                placeholder={placeholder}
+                {...field}
+                onChange={(e) => field.onChange(e.target.files)}
+                // autoComplete="false"
+                // value={value ? value : field.value}
+              />
+            </>
           ) : (
             <input
               type={type}
-              className={className} 
+              className={className}
               placeholder={placeholder}
               {...field}
               // autoComplete="false"

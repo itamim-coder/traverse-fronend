@@ -303,7 +303,7 @@ const HotelDetails = ({ params }: any) => {
                         <td>
                           <Room params={room}></Room>{" "}
                         </td>
-                        <td> <button><Link href="/tour/booking">reserve</Link></button></td>
+                        <td> <button><Link href="/hotel/booking">reserve</Link></button></td>
                         <th>
                           {/* <button
                             onClick={handleClick}
