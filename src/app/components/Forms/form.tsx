@@ -22,6 +22,7 @@ const Form = ({ children, submitHandler, defaultValues }: FormProps) => {
   const { handleSubmit, reset } = methods;
 
   const onSubmit = (data: any) => {
+    console.log(data);
     submitHandler(data);
     // reset();
   };

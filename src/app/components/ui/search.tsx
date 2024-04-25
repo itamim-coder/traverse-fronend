@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { addHours, format } from "date-fns";
+import { addDays, addHours, format } from "date-fns";
 
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -18,8 +18,9 @@ const Search = () => {
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
-      startDate: addHours(new Date(), 12),
-      endDate: addHours(new Date(), 13),
+      startDate: new Date(),
+      // endDate: addHours(new Date(), 13),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ]);
@@ -56,7 +57,7 @@ const Search = () => {
     }));
     console.log(serializedDates);
     console.log(serializedDates.length);
-    if (!selectedLocation) {
+    if (!selectedLocation || !dates) {
       alert("error");
     } else {
       const serializedOptions = {
