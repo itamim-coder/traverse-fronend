@@ -9,21 +9,28 @@ export const locationApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: ["getLocation"],
+      invalidatesTags: ["Location"],
     }),
     getLocation: build.query({
-      query: () => ({
+      query: (arg: Record<string, any>) => ({
         url: `${LOCATION_URL}`,
         method: "GET",
+        params: arg,
       }),
-      providesTags: ["getLocation"],
+      transformResponse: (response: any, meta:any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["Location"],
     }),
     locationBasedHotel: build.query({
       query: (id) => ({
         url: `${LOCATION_URL}/hotels/${id}`,
         method: "GET",
       }),
-      providesTags: ["locationBasedHotel"],
+      providesTags: ["Location"],
     }),
   }),
 });
