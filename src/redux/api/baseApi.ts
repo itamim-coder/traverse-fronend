@@ -29,6 +29,7 @@ export const baseApi = createApi({
     "verifyOtp",
     "getBookingHotel",
     "getBookingTour",
-    "profile"
+    "profile",
+    "createLocation",
   ],
 });
