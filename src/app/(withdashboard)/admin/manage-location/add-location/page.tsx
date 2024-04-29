@@ -3,10 +3,14 @@
 import Form from "@/app/components/Forms/form";
 import FormFileInput from "@/app/components/Forms/FormFileInput";
 import FormInput from "@/app/components/Forms/FormInput";
+import Alert from "@/app/components/ui/Alert/alert";
 import UploadImage from "@/app/components/ui/UploadImage";
 import { uploadImageToCloudinary } from "@/helpers/imgUpload/imgUpload";
+import { useCreateLocationMutation } from "@/redux/api/locationApi";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 
 type FormValues = {
   name: string;
@@ -14,38 +18,53 @@ type FormValues = {
 };
 const AddLocation = () => {
   const [showName, setShowName] = useState({});
+  const [addLocation] = useCreateLocationMutation();
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     console.log(data);
+    toast.loading("Creating....");
     try {
       const cloudinaryResponse = await uploadImageToCloudinary(showName);
-      console.log(cloudinaryResponse);
-    } catch (err) {}
+      console.log(cloudinaryResponse.data.url);
+      data.image = cloudinaryResponse.data.url;
+      const res = await addLocation(data);
+
+      if (!!res) {
+        toast.success("Added Successfully");
+      }
+    } catch (err) {
+      toast.error("failed");
+      console.log(err);
+    }
   };
+
   return (
-    <div>
-      <p>Add New Location</p>
-      <div className="flex justify-center">
+    <div className="min-h-screen  m-5">
+      <p className="text-2xl font-semibold my-4">Add New Location</p>
+      <div className="">
         <Form submitHandler={onSubmit}>
           <div>
             <FormInput
               name="name"
               type="text"
-              size="large"
+              placeholder="Location Name..."
               label="Add Location Name"
-              className=" px-4 py-3 rounded border-2 focus:dark:border-violet-400"
+              className="lg:w-2/5 w-full px-4 py-3 rounded border-2 
+              hover:border-black
+              focus:dark:border-violet-400"
             />
           </div>
           <div className="my-4">
-            <div className="my-10 flex justify-center">
+            <div className="">
               <label
-                className="flex h-full w-max items-end gap-4 rounded-md bg-cyan-500 px-6 py-4 text-white active:ring-4 active:ring-cyan-200"
+                className="flex justify-center w-2/5 items-end gap-4 rounded px-4 py-3 text-black border-2 hover:border-black"
                 htmlFor="file"
               >
                 <svg
                   width={30}
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="white"
+                  fill="black"
                 >
                   <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                   <g
@@ -60,7 +79,7 @@ const AddLocation = () => {
                           <path
                             d="M3,12.3v7a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2v-7"
                             fill="none"
-                            stroke="white"
+                            stroke="black"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth="2"
@@ -78,7 +97,7 @@ const AddLocation = () => {
                             ></polyline>
                             <line
                               fill="none"
-                              stroke="white"
+                              stroke="black"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth="2"
@@ -93,9 +112,13 @@ const AddLocation = () => {
                     </g>
                   </g>
                 </svg>
-                <p className="text-lg font-medium">
+                <p className="text-lg font-medium text-center">
                   {" "}
-                  {showName.name ? showName.name : "Upload"}
+                  {showName.name
+                    ? showName.name.length > 15
+                      ? `${showName.name.substring(0, 15)}...`
+                      : showName.name
+                    : "Upload"}
                 </p>
               </label>
               <input
@@ -111,14 +134,18 @@ const AddLocation = () => {
               />
             </div>
           </div>
-          <button
+          {/* <button
             type="submit"
-            className="group relative w-1/2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="  flex justify-center py-2 px-10 border  text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Sign in
+          </button> */}
+          <button type="submit" className=" flex justify-center  py-2 px-10   text-sm font-medium rounded text-white  before:absolute before:inset-0 before:-z-10 before:bg-button text-white after:block hover:after:w-full after:w-0 after:hover:left-0 after:right-0 after:top-0 after:h-full after:-z-10 after:duration-300 after:bg-black after:absolute relative inline-block">
+            Submit
           </button>
         </Form>
       </div>
+      <Alert />
     </div>
   );
 };
