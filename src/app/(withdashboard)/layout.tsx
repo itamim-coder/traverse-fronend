@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SideBar from "../components/ui/sidebar";
 import { isLoggedIn } from "../services/auth.services";
 import { useRouter } from "next/navigation";
+import NavBar from "../components/ui/navbar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
@@ -19,6 +20,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <html lang="en">
         <body>
+          {/* <NavBar /> */}
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content overflow-x-hidden">

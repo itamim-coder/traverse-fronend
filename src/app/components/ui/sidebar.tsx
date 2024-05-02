@@ -19,7 +19,6 @@ const SideBar = () => {
   }, []);
   console.log("userRole", userRole);
   const menus = SideBarItems(userRole);
- 
 
   return (
     <>
@@ -30,6 +29,9 @@ const SideBar = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+          <Link href="/" className="btn btn-ghost normal-case text-xl">
+            TraVerse.
+          </Link>
           {menus?.map((menu) => (
             <li key={menu.id} className="mb-2">
               {menu.submenus ? (

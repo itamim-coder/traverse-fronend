@@ -12,12 +12,12 @@ export const locationApi = baseApi.injectEndpoints({
       invalidatesTags: ["Location"],
     }),
     getLocation: build.query({
-      query: (arg: Record<string, any>) => ({
+      query: (arg?: Record<string, any>) => ({
         url: `${LOCATION_URL}`,
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: any, meta:any) => {
+      transformResponse: (response: any, meta: any) => {
         return {
           data: response,
           meta,
@@ -32,6 +32,13 @@ export const locationApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Location"],
     }),
+    deleteLocation: build.mutation({
+      query: (id) => ({
+        url: `${LOCATION_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Location"],
+    }),
   }),
 });
 
@@ -39,4 +46,5 @@ export const {
   useGetLocationQuery,
   useLocationBasedHotelQuery,
   useCreateLocationMutation,
+  useDeleteLocationMutation,
 } = locationApi;
