@@ -31,6 +31,7 @@ export const getNewAccessToken = async () => {
 
 export const isLoggedIn = () => {
   const authToken = getFromLocalStorage(authKey);
+  // console.log(authToken)
   return !!authToken;
 };
 export const token = () => {
