@@ -1,13 +1,13 @@
 "use client";
 
 import Form from "@/app/components/Forms/form";
-import FormFileInput from "@/app/components/Forms/FormFileInput";
+
 import FormInput from "@/app/components/Forms/FormInput";
 import Alert from "@/app/components/ui/Alert/alert";
-import UploadImage from "@/app/components/ui/UploadImage";
+
 import { uploadImageToCloudinary } from "@/helpers/imgUpload/imgUpload";
 import { useCreateLocationMutation } from "@/redux/api/locationApi";
-import { useRouter } from "next/navigation";
+
 import React, { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -25,8 +25,9 @@ const AddLocation = () => {
     toast.loading("Creating....");
     try {
       const cloudinaryResponse = await uploadImageToCloudinary(showName);
-      console.log(cloudinaryResponse.data.url);
-      data.image = cloudinaryResponse.data.url;
+      console.log(cloudinaryResponse);
+    
+      data.image = cloudinaryResponse;
       const res = await addLocation(data);
 
       if (!!res) {
@@ -140,7 +141,10 @@ const AddLocation = () => {
           >
             Sign in
           </button> */}
-          <button type="submit" className=" flex justify-center  py-2 px-10   text-sm font-medium rounded text-white  before:absolute before:inset-0 before:-z-10 before:bg-button text-white after:block hover:after:w-full after:w-0 after:hover:left-0 after:right-0 after:top-0 after:h-full after:-z-10 after:duration-300 after:bg-black after:absolute relative inline-block">
+          <button
+            type="submit"
+            className=" flex justify-center  py-2 px-10   text-sm font-medium rounded text-white  before:absolute before:inset-0 before:-z-10 before:bg-button text-white after:block hover:after:w-full after:w-0 after:hover:left-0 after:right-0 after:top-0 after:h-full after:-z-10 after:duration-300 after:bg-black after:absolute relative inline-block"
+          >
             Submit
           </button>
         </Form>
