@@ -6,6 +6,7 @@ interface IInput {
   type?: string;
   size?: "large" | "small";
   value?: string | string[] | FileList | undefined;
+  require?: boolean;
   id?: string;
   placeholder?: string;
   validation?: object;
@@ -19,6 +20,7 @@ const FormInput = ({
   size,
   value,
   id,
+  require,
   placeholder,
   validation,
   label,
@@ -46,19 +48,19 @@ const FormInput = ({
               value={value ? value : field.value}
             />
           ) : type === "file" ? (
-            <>
-              <input
-                type={type}
-                className="file-input file-input-bordered file-input-primary w-full mt-3"
-                placeholder={placeholder}
-                {...field}
-                onChange={(e) => field.onChange(e.target.files)}
-                // autoComplete="false"
-                // value={value ? value : field.value}
-              />
-            </>
+            <input
+              required={require}
+              type={type}
+              className="file-input file-input-bordered file-input-primary w-full mt-3"
+              placeholder={placeholder}
+              {...field}
+              onChange={(e) => field.onChange(e.target.files)}
+              // autoComplete="false"
+              // value={value ? value : field.value}
+            />
           ) : (
             <input
+              required={require}
               type={type}
               className={className}
               placeholder={placeholder}

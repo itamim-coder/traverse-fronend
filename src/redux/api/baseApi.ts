@@ -11,7 +11,7 @@ export const baseApi = createApi({
     "user",
     "createAdmin",
     "getAdmin",
-    "getHotel",
+    "hotel",
     "hotelDetails",
     "singleRoom",
     "reserveRoom",
