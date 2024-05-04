@@ -30,7 +30,14 @@ export const hotelApi = baseApi.injectEndpoints({
         url: `${HOTEL_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: ["hotel"],
+      providesTags: ["hotel", "room"],
+    }),
+    deleteHotel: build.mutation({
+      query: (id) => ({
+        url: `${HOTEL_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["hotel"],
     }),
   }),
 });
@@ -39,4 +46,5 @@ export const {
   useCreateHotelMutation,
   useGetHotelsQuery,
   useHotelDetailsQuery,
+  useDeleteHotelMutation,
 } = hotelApi;

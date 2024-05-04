@@ -5,29 +5,42 @@ import Form from "@/app/components/Forms/form";
 
 import FormInput from "@/app/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
-import { useGetLocationQuery } from "@/redux/api/locationApi";
+
 import { uploadImageToCloudinary } from "@/helpers/imgUpload/imgUpload";
-import { useCreateHotelMutation } from "@/redux/api/hotelApi";
+import {
+
+  useGetHotelsQuery,
+} from "@/redux/api/hotelApi";
 import toast from "react-hot-toast";
+import { useCreateRoomMutation } from "@/redux/api/roomApi";
 
-const AddHotel = () => {
+const CreateRoom = () => {
+  const query: Record<string, any> = {};
   const [showName, setShowName] = useState({});
-  const [location, setLocation] = useState("");
-  console.log(location);
-  console.log(showName);
+  const [hotelId, setHotelId] = useState("");
 
-  const { data: locations, isLoading } = useGetLocationQuery(undefined);
-  const Locations = locations?.data.result;
-  const [addHotel] = useCreateHotelMutation();
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(Number.MAX_SAFE_INTEGER);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  const { data: hotels, isLoading } = useGetHotelsQuery({ ...query });
+  console.log(hotels);
+  const Hotels = hotels?.data.result;
+  const [CreateRoom] = useCreateRoomMutation();
   const onSubmit: SubmitHandler<any> = async (data: any) => {
-    data.locationId = location;
-    // console.log(data);
+    data.hotelId = hotelId;
+    console.log(data);
     if (
-      !location ||
+      !hotelId ||
       !showName.length ||
       !data.name ||
-      !data.address ||
-      !data.cheapest_price
+      !data.maxPeople ||
+      !data.price
     ) {
       toast.error("Please fill in all the fields.");
       return;
@@ -38,11 +51,11 @@ const AddHotel = () => {
       const cloudinaryResponse = await uploadImageToCloudinary(showName);
       console.log(cloudinaryResponse);
       data.photos = cloudinaryResponse;
-      const res = await addHotel(data);
+      const res = await CreateRoom(data);
       console.log(res);
       if (res?.data.id) {
         setShowName({});
-        toast.success("Added Successfully");
+        toast.success("Room Created Successfully");
       }
     } catch (err) {
       setShowName({});
@@ -53,7 +66,7 @@ const AddHotel = () => {
 
   return (
     <div className="min-h-screen  m-5">
-      <p className="text-2xl font-semibold my-4">Add New Hotel</p>
+      <p className="text-2xl font-semibold my-4">Create Room For A Hotel</p>
       <div className="">
         <Form submitHandler={onSubmit}>
           <div className="flex">
@@ -63,8 +76,8 @@ const AddHotel = () => {
                   require
                   name="name"
                   type="text"
-                  placeholder="Hotel Name..."
-                  label="Add Hotel Name"
+                  placeholder="Ex : Deluxe Hill View"
+                  label="Room Type"
                   className="w-full px-4 py-3 rounded border-2 
               hover:border-black
               focus:dark:border-violet-400"
@@ -76,12 +89,12 @@ const AddHotel = () => {
                 <select
                   required
                   className="select  select-bordered border-2 w-full "
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => setHotelId(e.target.value)}
                 >
-                  <option value="">Select City</option>
-                  {Locations?.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
+                  <option value="">Select Hotel</option>
+                  {Hotels?.map((hotel) => (
+                    <option key={hotel.id} value={hotel.id}>
+                      {hotel.name}
                     </option>
                   ))}
                 </select>
@@ -97,7 +110,7 @@ const AddHotel = () => {
               <p className="text-normal font-medium text-center">
                 {showName.length > 0
                   ? `${showName.length} files selected`
-                  : "Upload max 5 photos"}
+                  : "Upload max 3 photos"}
               </p>
             </label>
             <input
@@ -119,11 +132,11 @@ const AddHotel = () => {
             <div className="w-full">
               <FormInput
                 require
-                name="address"
-                type="text"
+                name="maxPeople"
+                type="number"
                 size="large"
-                placeholder="Hotel Address..."
-                label="Hotel Address"
+                placeholder="1 / 2"
+                label="Max People"
                 className="w-full px-4 py-3 rounded border-2 
               hover:border-black
               focus:dark:border-violet-400"
@@ -132,7 +145,7 @@ const AddHotel = () => {
             <div className="w-full">
               <FormInput
                 require
-                name="cheapest_price"
+                name="price"
                 type="number"
                 placeholder="Cheapest Room Price..."
                 label="Cheapest Room Price"
@@ -155,4 +168,4 @@ const AddHotel = () => {
   );
 };
 
-export default AddHotel;
+export default CreateRoom;
