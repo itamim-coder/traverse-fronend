@@ -13,7 +13,7 @@ export const baseApi = createApi({
     "getAdmin",
     "hotel",
     "hotelDetails",
-    "singleRoom",
+    "room",
     "reserveRoom",
     "Location",
     "locationBasedHotel",

@@ -2,7 +2,8 @@
 import Loading from "@/app/components/Loading";
 import Alert from "@/app/components/ui/Alert/alert";
 import Pagination from "@/app/components/ui/Pagination/Pagination";
-import { useGetHotelsQuery } from "@/redux/api/hotelApi";
+import { useDeleteHotelMutation, useGetHotelsQuery } from "@/redux/api/hotelApi";
+import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -20,7 +21,7 @@ const ViewHotels = () => {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   const { data: hotels, isLoading } = useGetHotelsQuery({ ...query });
-  // const [deleteLocation] = useDeleteLocationMutation();
+  const [deleteHotel] = useDeleteHotelMutation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
@@ -36,13 +37,13 @@ const ViewHotels = () => {
     setPage(pageNumber + 1); // Pagination starts from 0, but page state starts from 1
   };
 
-  // const handleDelete = async (id: string) => {
-  //   toast.promise(deleteLocation(id), {
-  //     loading: "Deleting...",
-  //     success: "Delete Successfully",
-  //     error: "Could not delete.",
-  //   });
-  // };
+  const handleDelete = async (id: string) => {
+    toast.promise(deleteHotel(id), {
+      loading: "Deleting...",
+      success: "Delete Successfully",
+      error: "Could not delete.",
+    });
+  };
 
   return (
     <div className="m-5">
@@ -99,9 +100,9 @@ const ViewHotels = () => {
                     {data.featured ? "Yes" : "No"}
                   </td>
                   <td className="py-4 px-6  border-b text-end">
-                    <button className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md">
+                    <Link href={`/admin/manage-hotel/view-hotels/${data?.id}`} className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md">
                       Details
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleDelete(data.id)}
                       className="bg-red-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md"
