@@ -62,10 +62,6 @@ const ViewTours = () => {
       console.error("Error updating availability:", error);
       toast.error("Failed to update availability");
     }
-
-    // Perform an update to toggle the availability in your backend
-    // Here you would typically call an API to update the availability
-    // After the update, you might want to fetch the tours again to reflect the changes
   };
 
   return (
