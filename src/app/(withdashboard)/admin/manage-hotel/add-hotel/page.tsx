@@ -56,8 +56,8 @@ const AddHotel = () => {
       <p className="text-2xl font-semibold my-4">Add New Hotel</p>
       <div className="">
         <Form submitHandler={onSubmit}>
-          <div className="flex">
-            <div className="w-full flex gap-2">
+       
+            <div className="flex gap-2">
               <div className="w-full">
                 <FormInput
                   require
@@ -87,7 +87,7 @@ const AddHotel = () => {
                 </select>
               </div>
             </div>
-          </div>
+ 
 
           <div className="my-4">
             <label
