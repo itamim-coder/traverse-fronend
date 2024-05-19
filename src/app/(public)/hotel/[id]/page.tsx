@@ -1,15 +1,19 @@
 "use client";
 
 import { useHotelDetailsQuery } from "@/redux/api/hotelApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { addHours, format } from "date-fns";
+import { addDays, addHours, format } from "date-fns";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; //
-import { setDateRange, setOption } from "@/redux/Features/searchSlice";
+import {
+  setDateRange,
+  setOption,
+  setSearchParameters,
+} from "@/redux/Features/searchSlice";
 import Room from "@/app/components/Rooms/Rooms";
 import Link from "next/link";
 
@@ -18,11 +22,14 @@ const HotelDetails = ({ params }: any) => {
     params?.id
   );
 
+  console.log(hotelData);
   const [openDate, setOpenDate] = useState(false);
+  const initialDates = useAppSelector((state) => state.search.dates);
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      // endDate: addHours(new Date(), 13),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ]);
@@ -42,12 +49,28 @@ const HotelDetails = ({ params }: any) => {
     });
   };
   const dispatch = useAppDispatch();
+  console.log("init", initialDates);
   // const { dispatch } = useContext(SearchContext);
   const router = useRouter();
+  useEffect(() => {
+    if (initialDates.length == 0) {
+      const serializedDates = dates.map((dateRange) => ({
+        startDate: new Date(dateRange.startDate).toISOString(), // Remove 'Z' to keep the original time zone offset
+        endDate: new Date(dateRange.endDate).toISOString(), // Remove 'Z' to keep the original time zone offset
+        key: dateRange.key,
+      }));
+      dispatch(
+        setDateRange({
+          dates: serializedDates,
+        })
+      );
+    }
+  }, []);
   const handleSearch = () => {
     // const selectedLocation = locations.find(
     //   (location) => location.name === destination
     // );
+
     console.log(dates);
     const serializedDates = dates.map((dateRange) => ({
       startDate: new Date(dateRange.startDate).toISOString(), // Remove 'Z' to keep the original time zone offset
@@ -158,6 +181,31 @@ const HotelDetails = ({ params }: any) => {
                       "MM/dd/yyyy"
                     )}`}
                   </span>
+                  {/* {initialDates.length == 0 ? (
+                    <>
+                      <span
+                        onClick={() => setOpenDate(!openDate)}
+                        className="block cursor-pointer border text-black px-4 py-3 rounded-sm focus:outline-none  focus:ring-blue-500"
+                      >
+                        {`${format(
+                          dates[0].startDate,
+                          "MM/dd/yyyy"
+                        )} - ${format(dates[0].endDate, "MM/dd/yyyy")}`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        onClick={() => setOpenDate(!openDate)}
+                        className="block cursor-pointer border text-black px-4 py-3 rounded-sm focus:outline-none  focus:ring-blue-500"
+                      >
+                        {`${format(
+                          initialDates[0]?.startDate,
+                          "MM/dd/yyyy"
+                        )} - ${format(initialDates[0]?.endDate, "MM/dd/yyyy")}`}
+                      </span>
+                    </>
+                  )} */}
                   {openDate && (
                     <DateRange
                       editableDateInputs={true}
@@ -271,7 +319,7 @@ const HotelDetails = ({ params }: any) => {
                         <th>Sleeps</th>
                         <th>Per night price</th>
                         <th>Select Rooms</th>
-                        <th></th>
+                        {/* <th></th> */}
                       </tr>
                     </thead>
                     <tbody>
@@ -287,12 +335,12 @@ const HotelDetails = ({ params }: any) => {
                             <div className="flex gap-2">
                               <img
                                 className="h-48 w-32"
-                                src={room.photos[0]}
+                                src={room.photos[1]}
                                 alt=""
                               />
                               <img
                                 className="h-48 w-32"
-                                src={room.photos[0]}
+                                src={room.photos[2]}
                                 alt=""
                               />
                             </div>
@@ -301,9 +349,15 @@ const HotelDetails = ({ params }: any) => {
                         <td>{room.maxPeople} Person</td>
                         <td> $ {room.price}</td>
                         <td>
-                          <Room params={room}></Room>{" "}
+                          {dates ? (
+                            <>
+                              <Room params={room}></Room>{" "}
+                            </>
+                          ) : (
+                            <p>Please Select Date</p>
+                          )}
                         </td>
-                        <td> <button><Link href="/hotel/booking">reserve</Link></button></td>
+                        {/* <td> <button><Link href="/hotel/booking">reserve</Link></button></td> */}
                         <th>
                           {/* <button
                             onClick={handleClick}

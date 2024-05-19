@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setSearchQuery } from "@/redux/Features/hotelSlice";
 import { BsArrowUpRight } from "react-icons/bs";
 const HotelList = ({ params }) => {
-  const [priceRange, setPriceRange] = useState(10000);
+  const [priceRange, setPriceRange] = useState(100000);
 
   const { searchQuery } = useAppSelector((state) => state.hotel);
 
@@ -42,8 +42,8 @@ const HotelList = ({ params }) => {
           <input
             type="range"
             min="1000"
-            max="10000"
-            step="500"
+            max="100000"
+            step="1000"
             value={priceRange}
             onChange={handlePriceChange}
             className="range range-primary"

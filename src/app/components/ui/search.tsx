@@ -33,6 +33,7 @@ const Search = () => {
   const { data: locations, isLoading } = useGetLocationQuery(undefined);
   // const { user } = useContext(AuthContext);
   const Locations = locations?.data.result;
+  console.log(Locations)
   const handleOption = (name: any, operation: any) => {
     setOptions((prev) => {
       return {
@@ -46,7 +47,7 @@ const Search = () => {
   const router = useRouter();
   const handleSearch = () => {
     const selectedLocation = Locations.find(
-      (Locations) => Locations.name === destination
+      (Locations) => Locations.id === destination
     );
     console.log(dates);
     console.log(selectedLocation);
@@ -120,7 +121,7 @@ const Search = () => {
                 <FaLocationDot />
                 <option value="">Select your destination</option>
                 {Locations?.map((location) => (
-                  <option key={location.id} value={location.name}>
+                  <option key={location.id} value={location.id}>
                     {location.name}
                   </option>
                 ))}

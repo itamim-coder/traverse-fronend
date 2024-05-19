@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/ui/sidebar";
-import { isLoggedIn } from "../services/auth.services";
+import { isLoggedIn, token } from "../services/auth.services";
 import { useRouter } from "next/navigation";
 import NavBar from "../components/ui/navbar";
 
@@ -10,6 +10,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   console.log("userlog", userLoggedIn);
+  const t = token();
+  console.log(t);
   useEffect(() => {
     if (!userLoggedIn) {
       router.push("/login");

@@ -33,6 +33,13 @@ export const roomApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["hotel", "room"],
     }),
+    deleteRoomNo: build.mutation({
+      query: (id) => ({
+        url: `${ROOM_URL}/room-no/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["hotel", "room"],
+    }),
   }),
 });
 
@@ -40,5 +47,6 @@ export const {
   useCreateRoomMutation,
   useGetSingleRoomQuery,
   useReserveAroomMutation,
-  useDeleteRoomCategoryMutation
+  useDeleteRoomCategoryMutation,
+  useDeleteRoomNoMutation,
 } = roomApi;
