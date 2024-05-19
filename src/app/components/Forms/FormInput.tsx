@@ -4,10 +4,12 @@ import { useFormContext, Controller } from "react-hook-form";
 interface IInput {
   name: string;
   type?: string;
+
   size?: "large" | "small";
   value?: string | string[] | FileList | undefined;
   require?: boolean;
   id?: string;
+
   placeholder?: string;
   validation?: object;
   label?: string;
@@ -20,6 +22,7 @@ const FormInput = ({
   size,
   value,
   id,
+ 
   require,
   placeholder,
   validation,
@@ -65,6 +68,7 @@ const FormInput = ({
               className={className}
               placeholder={placeholder}
               {...field}
+             
               // autoComplete="false"
               value={value ? value : field.value}
             />
