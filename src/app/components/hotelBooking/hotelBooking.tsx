@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { token } from "@/app/services/auth.services";
 import { useUserHotelQuery, useUserTourQuery } from "@/redux/api/bookingApi";
@@ -18,6 +18,7 @@ const HotelBooking = () => {
             <tr>
               <th></th>
               <th>Name</th>
+              <th>Room Type</th>
               <th>Days</th>
               <th>Total Amount</th>
               <th>Order Status</th>
@@ -27,11 +28,25 @@ const HotelBooking = () => {
             {/* row 1 */}
             {hotelData?.map((dt, index) => (
               <tr>
-                <th>{index+1}</th>
-                <td>{dt?.customer_name}</td>
-                <td>{dt?.hotelBooks?.days}</td>
-                <td>{dt?.hotelBooks?.totalAmount}</td>
-                <td>{dt?.status}</td>
+                <td className="w-32 mask mask-squircle">
+                  <img
+                    src={dt?.hotelBooks?.roomInfo?.hotel?.photos[0]}
+                    alt=""
+                  />
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.hotelBooks?.roomInfo?.hotel?.name}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.hotelBooks?.roomInfo?.name}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.hotelBooks?.days}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.hotelBooks?.totalAmount}
+                </td>
+                <td className="text-black font-semibold"> {dt?.status}</td>
               </tr>
             ))}
             {/* row 2 */}

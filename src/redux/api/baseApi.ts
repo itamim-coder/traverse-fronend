@@ -23,8 +23,8 @@ export const baseApi = createApi({
     "getUpcomingTour",
     "singleTour",
     "createHotel",
-    "bookingHotel",
-    "bookingTour",
+    "booking",
+
     "signup",
     "sendOtp",
     "verifyOtp",

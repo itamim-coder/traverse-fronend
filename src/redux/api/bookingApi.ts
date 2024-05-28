@@ -12,7 +12,7 @@ export const bookingApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: ["bookingHotel"],
+      invalidatesTags: ["booking"],
     }),
     bookTour: build.mutation({
       query: (data) => ({
@@ -20,7 +20,7 @@ export const bookingApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: ["bookingTour"],
+      invalidatesTags: ["booking"],
     }),
     userHotel: build.query({
       query: () => {
@@ -29,7 +29,7 @@ export const bookingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["getBookingHotel"],
+      providesTags: ["booking"],
     }),
     userTour: build.query({
       query: () => {
@@ -38,7 +38,7 @@ export const bookingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["getBookingTour"],
+      providesTags: ["booking"],
     }),
   }),
 });
