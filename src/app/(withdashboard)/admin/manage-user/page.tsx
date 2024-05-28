@@ -63,7 +63,11 @@ const ManageUsers = () => {
             <div className="card w-96 bg-base-100 border hover:shadow-xl ">
               <div className="avatar flex justify-center align-middle">
                 <div className="w-24 mask mask-squircle  mt-5">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  {data?.profileImg ? (
+                    <img src={data.profileImg} />
+                  ) : (
+                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  )}
                 </div>
               </div>
               <div className="card-body items-center text-center">

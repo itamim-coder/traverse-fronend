@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import { token } from "@/app/services/auth.services";
 import { useUserHotelQuery, useUserTourQuery } from "@/redux/api/bookingApi";
 import React from "react";
 
 const TourBooking = () => {
-
   const { data: tourData } = useUserTourQuery(undefined);
   console.log(tourData);
 
@@ -19,6 +18,7 @@ const TourBooking = () => {
               <th></th>
               <th>Name</th>
               <th>Days</th>
+              <th>Member</th>
               <th>Total Amount</th>
               <th>Order Status</th>
             </tr>
@@ -27,11 +27,22 @@ const TourBooking = () => {
             {/* row 1 */}
             {tourData?.map((dt, index) => (
               <tr>
-                <th>{index+1}</th>
-                <td>{dt?.tourBooks?.tourInfo?.title}</td>
-                <td>{dt?.tourBooks?.tourInfo?.duration}</td>
-                <td>{dt?.tourBooks?.totalAmount}</td>
-                <td>{dt?.status}</td>
+                <td className="w-32 mask mask-squircle">
+                  <img src={dt?.tourBooks?.tourInfo?.images[0]} alt="" />
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.tourBooks?.tourInfo?.title}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.tourBooks?.tourInfo?.duration}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.tourBooks?.options?.member}
+                </td>
+                <td className="text-black font-semibold">
+                  {dt?.tourBooks?.totalAmount}
+                </td>
+                <td className="text-black font-semibold">{dt?.status}</td>
               </tr>
             ))}
             {/* row 2 */}

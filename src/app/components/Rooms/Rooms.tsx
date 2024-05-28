@@ -11,11 +11,11 @@ const Room = ({ params }: any) => {
   const [selectedRooms, setSelectedRooms] = useState<
     { id; price; roomNumber }[]
   >([]);
-  console.log(params);
+  console.log("selectedRooms", selectedRooms);
   const { data: roomData, isLoading: loading } = useGetSingleRoomQuery(
     params?.id
   );
-  console.log(roomData);
+
   const { dates, options } = useAppSelector((state) => state.search);
   const router = useRouter();
   const getDatesInRange = (
@@ -37,6 +37,7 @@ const Room = ({ params }: any) => {
 
     return dates;
   };
+
   const alldates = getDatesInRange(dates[0]?.startDate, dates[0]?.endDate);
   console.log(alldates);
 
@@ -48,8 +49,6 @@ const Room = ({ params }: any) => {
       );
     });
   };
-  console.log(selectedRooms);
-
 
   const handleSelect = (e: { target: { checked: any; value: any } }) => {
     const checked = e.target.checked;
@@ -73,7 +72,6 @@ const Room = ({ params }: any) => {
       setSelectedRooms(selectedRooms.filter((room) => room.id !== value));
     }
   };
-  console.log(selectedRooms);
   const [reserveAroom] = useReserveAroomMutation();
   const dispatch = useAppDispatch();
   const handleReserve = async () => {
@@ -99,7 +97,7 @@ const Room = ({ params }: any) => {
         options: options,
       })
     );
-    router.push( `/hotel/${params.id}/booking`);
+    router.push(`/hotel/${params.id}/booking`);
     // try {
     //   await Promise.all(
     //     selectedRooms.map(async (roomId) => {
@@ -124,6 +122,8 @@ const Room = ({ params }: any) => {
     //   console.log(err);
     // }
   };
+
+  console.log(roomData?.RoomNumber);
   return (
     <>
       <div className="grid grid-cols-2 gap-2">
@@ -164,6 +164,3 @@ const Room = ({ params }: any) => {
 };
 
 export default Room;
-function setSelectedRooms(arg0: any) {
-  throw new Error("Function not implemented.");
-}
