@@ -58,15 +58,19 @@ const FeaturedTour = () => {
                       </p>
                     </div>
                     <div className="mt-auto flex justify-between">
+                      {/* <Link
+                        href={`/tour/${tour.id}`}
+                        className="btn btn-sm btn-outline hover:bg-CC584A"
+                      >
+                        Details
+                      </Link> */}
+                      <div></div>
                       <Link
                         href={`/tour/${tour.id}`}
                         className="btn btn-sm btn-outline hover:bg-CC584A"
                       >
                         Details
                       </Link>
-                      <button className="btn btn-sm btn-outline hover:bg-CC584A">
-                        Book
-                      </button>
                     </div>
                   </div>
                 </div>

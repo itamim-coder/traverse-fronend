@@ -82,13 +82,14 @@ const TourDetails = ({ params }) => {
           <div className="py-10 flex w-full justify-between gap-3">
             <div className="w-3/5 ">
               <div className=" ">
-                <div className="text-2xl font-semibold">
-                  <p>{tourData?.title}</p>
+                <div className=" font-semibold">
+                  <p className="text-4xl my-4">{tourData?.title}</p>
                   <p>{tourData?.price} /Per Person</p>
                 </div>
-                <div className="text-xl font-semibold">
-                  <p>{tourData?.duration}</p>
-                  <p>{tourData?.starting_date}</p>
+                <div className=" font-semibold flex gap-4 my-4">
+                  <p>{tourData?.duration} Days</p>
+                  <p>Max People : 40</p>
+                  <p>Date : {tourData?.starting_date}</p>
                 </div>
               </div>
               <p className="text-2xl font-bold my-5">Overview</p>
@@ -112,9 +113,9 @@ const TourDetails = ({ params }) => {
               </div>
             </div>
             <div className="w-2/5 ">
-              <div className="bg-white p-12">
+              <div className="bg-white p-8 rounded-md">
                 <div className="text-center">
-                  <p className="text-2xl font-bold">Book Your Tour</p>
+                  <p className="text-2xl font-semibold">Book Your Tour</p>
                   <p className="my-3">
                     Reserve your ideal trip early for a hassle-free trip; secure
                     comfort and convenience!
@@ -128,7 +129,7 @@ const TourDetails = ({ params }) => {
                        w-full flex justify-between py-3 "
                     >
                       <div className="flex">
-                        <p className="font-semibold">Adult :</p>
+                        <p className="font-semibold">Person :</p>
                         <div className="mx-5">{tourData?.price}/Per Person</div>
                       </div>
                       <div className="">
@@ -136,7 +137,7 @@ const TourDetails = ({ params }) => {
                         <div className="flex align-middle  justify-around space-x-4">
                           <button
                             disabled={options.member <= 1}
-                            className="text-gray-700 hover:text-blue-500 border-2 px-1 rounded-md "
+                            className="hover:text-white hover:bg-orange-500 text-orange-500 bg-white border-orange-500 border-2 rounded-md px-1"
                             onClick={() => handleOption("member", "d")}
                           >
                             -
@@ -145,7 +146,7 @@ const TourDetails = ({ params }) => {
                             {options.member}
                           </span>
                           <button
-                            className="text-gray-700 hover:text-blue-500 border-2 rounded-md px-1"
+                            className="hover:text-white hover:bg-orange-500 text-orange-500 bg-white border-orange-500 border-2 rounded-md px-1"
                             onClick={() => handleOption("member", "i")}
                           >
                             +
@@ -156,17 +157,17 @@ const TourDetails = ({ params }) => {
                     {/* )} */}
                   </div>
                 </div>
-
+                <div className="border-b border-orange-400 my-2"></div>
                 <div>
-                  <div className="text-center my-3 text-xl">
-                    Total Amount :
-                    <span className="font-bold"> ${totalAmount}</span>
+                  <div className="text-center my-3 text-xl ">
+                    <span className="font-semibold">Total :</span>
+                    <span> ${totalAmount}</span>
                   </div>
                   <button
                     onClick={handleBook}
-                    className="w-full border-2 border-sky-500 px-8 py-3 text-xl text-sky-500 duration-200 hover:bg-sky-500 hover:text-white"
+                    className="w-full border-2 rounded-md bg-orange-500  px-8 py-3 font-medium text-lg text-white duration-200 hover:border-orange-500 hover:bg-white hover:text-orange-500"
                   >
-                    <p className="text-center">Book Now</p>
+                    <p className="text-center ">Proceed To Book</p>
                   </button>
                 </div>
               </div>

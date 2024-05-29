@@ -1,64 +1,115 @@
-"use client";
+import { time } from "console";
+import React from "react";
 
-import { useState } from "react";
+const tourTimeline = [
+  {
+    day: 1,
+    name: "Arrival and City Tour",
+    activities: [
+      {
+        time: "09:00",
+        activity: "Departure from Origin City",
+      },
+      {
+        time: "12:00",
+        activity: "Arrival at Destination City",
+      },
+      {
+        time: "14:00",
+        activity: "Check-in at Hotel",
+      },
+      {
+        time: "18:00",
+        activity: "Guided City Tour",
+      },
+      {
+        time: "20:00",
+        activity: "Dinner at Local Restaurant",
+      },
+    ],
+  },
+  {
+    day: 2,
+    name: "Historical Sites and Cultural Experience",
+    activities: [
+      {
+        time: "09:00",
+        activity: "Breakfast at Hotel",
+      },
+      {
+        time: "10:00",
+        activity: "Visit to Historical Site",
+      },
+      {
+        time: "13:00",
+        activity: "Lunch at Traditional Eatery",
+      },
+      {
+        time: "15:00",
+        activity: "Shopping at Local Market",
+      },
+      {
+        time: "19:00",
+        activity: "Cultural Performance",
+      },
+      {
+        time: "21:00",
+        activity: "Free Time",
+      },
+    ],
+  },
+  {
+    day: 3,
+    name: "Adventure and Nature Exploration",
+    activities: [
+      {
+        time: "08:00",
+        activity: "Breakfast at Hotel",
+      },
+      {
+        time: "09:00",
+        activity: "Adventure Activity (Optional)",
+      },
+      {
+        time: "12:00",
+        activity: "Lunch",
+      },
+      {
+        time: "14:00",
+        activity: "Explore Nature Reserve",
+      },
+      {
+        time: "18:00",
+        activity: "Farewell Dinner",
+      },
+    ],
+  },
+];
 
-const TourPlan = () => {
-  // add your array of object data
-  const array = [1, 2, 3, 4];
-
-  // toggle state and function
-  const [isOpen, setIsOpen] = useState(null);
-  const handleToggle = (idx) =>
-    setIsOpen((prevIdx) => (prevIdx === idx ? null : idx));
-
+const tourPlan = () => {
   return (
-    <div className="flex">
-      <div className=" max-w-[550px] rounded-lg py-20 space-y-6 cursor-pointer">
-        {/* maping each accordion  */}
-        {array.map((arr, idx) => (
-          <div
-            key={idx}
-            onClick={() => handleToggle(idx)}
-            className="flex w-full items-center"
-          >
-            {/* the index div  */}
-            <div className="p-2 text-center bg-[#355E72] flex justify-center items-center text-white text-xl font-semibold rounded-xl font-sans">
-              <span>Day 0{idx + 1}</span>
-            </div>
-            <div className="w-10 h-[2px] bg-[#355E72] relative">
-              <span className="w-3 h-3 bg-white absolute -left-2 -top-[5px] z-40 rounded-full border-2 border-[#355E72]"></span>
-              <span className="bg-[#355E72] w-10 h-1"></span>
-            </div>
-            {/* main accordion div  */}
-            <div>
-              <div className=" bg-sky-50 shadow-md border-t-[12px] p-3 border-[#355E72] relative">
-                <span className="h-0 w-0 border-b-[40px] border-b-transparent border-r-[40px] border-r-[#355E72] absolute top-0 right-0"></span>
-                <h1 className="text-[#355E72] text-xl text-center">
-                  This is my title
-                </h1>
-              </div>
-              <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600  ${
-                  isOpen === idx
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <div className=" max-w-[450px] rounded-br-xl rounded-bl-xl bg-[#355E72] text-white p-6 text-center text-sm">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Dolor nam ipsam sint illo odio sed voluptates suscipit,
-                    rerum esse ratione non alias obcaecati error harum nesciunt.
-                    Vitae optio commodi illum!
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div>
+      <p className="text-2xl font-semibold my-3">Itinerary</p>
+      {tourTimeline.map((timeline) => (
+        <div className="my-4 collapse collapse-arrow bg-base-400 shadow-sm">
+          <input type="radio" name="my-accordion-2" defaultChecked />
+          <div className="collapse-title text-xl font-medium ">
+            <span className="p-3 bg-orange-400 mr-4 text-white">
+              Day : {timeline.day}{" "}
+            </span>
+            <span className="font-bold"> {timeline.name}</span>
           </div>
-        ))}
-      </div>
+          <div className="collapse-content ">
+            {timeline.activities.map((activity) => (
+              <p>
+                • {activity.time} : {activity.activity}
+              </p>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default TourPlan;
+export default tourPlan;

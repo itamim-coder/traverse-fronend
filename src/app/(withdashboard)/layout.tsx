@@ -1,19 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/ui/sidebar";
-import { isLoggedIn, token } from "../services/auth.services";
+import { isLoggedIn, removeUserInfo, token } from "../services/auth.services";
 import { useRouter } from "next/navigation";
 import NavBar from "../components/ui/navbar";
+import { authKey } from "@/constants/storageKey";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   console.log("userlog", userLoggedIn);
-  const t = token();
-  console.log(t);
+
   useEffect(() => {
     if (!userLoggedIn) {
+      // removeUserInfo(authKey);
       router.push("/login");
     }
     setIsLoading(true);

@@ -29,9 +29,17 @@ export const getNewAccessToken = async () => {
   });
 };
 
+// export const getCookie = (name: string) => {
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
+//   console.log("cook",value);
+//   if (parts.length === 2) return parts.pop().split(";").shift();
+// };
+
 export const isLoggedIn = () => {
   const authToken = getFromLocalStorage(authKey);
-  // console.log(authToken)
+  // const refreshToken = getCookie("refreshToken");
+  // console.log("ref", refreshToken);
   return !!authToken;
 };
 export const token = () => {
