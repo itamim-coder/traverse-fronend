@@ -9,6 +9,7 @@ import { CgProfile } from "react-icons/cg";
 
 const NavBar = () => {
   const { email } = getUserInfo();
+  
   console.log("navbar", email);
   const router = useRouter();
   const logOut = () => {

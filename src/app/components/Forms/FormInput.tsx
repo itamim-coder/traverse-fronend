@@ -34,7 +34,7 @@ const FormInput = ({
   return (
     <>
       {label ? (
-        <label className="text-sm  font-medium text-gray-700">{label}</label>
+        <label className="text-sm   font-medium text-gray-700">{label}</label>
       ) : null}
       <br />
       <Controller
