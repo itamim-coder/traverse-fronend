@@ -140,8 +140,10 @@ const Room = ({ params }: any) => {
               <input
                 type="checkbox"
                 value={rd.id}
+                className="checkbox"
                 onChange={handleSelect}
                 disabled={!isAvailable(rd)}
+               
               />
               <label className="text-gray-600">Select</label>
             </div>
@@ -150,10 +152,10 @@ const Room = ({ params }: any) => {
       </div>
       <button
         onClick={handleReserve}
-        className={`w-1/2 mt-2  py-3 rounded-lg text-white ${
+        className={`w-1/2 mt-2  py-3 rounded-lg text-white font-semibold ${
           selectedRooms.length === 0
             ? "bg-gray-300 cursor-not-allowed"
-            : "bg-blue-500 hover:bg-blue-600"
+            : "bg-orange-500 hover:bg-orange-600"
         }`}
         disabled={selectedRooms.length === 0}
       >
