@@ -11,6 +11,14 @@ export const roomApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["room"],
     }),
+    addRoom: build.mutation({
+      query: (data) => ({
+        url: `${ROOM_URL}/add-room`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["room"],
+    }),
     getSingleRoom: build.query({
       query: (id) => ({
         url: `${ROOM_URL}/${id}`,
@@ -45,6 +53,7 @@ export const roomApi = baseApi.injectEndpoints({
 
 export const {
   useCreateRoomMutation,
+  useAddRoomMutation,
   useGetSingleRoomQuery,
   useReserveAroomMutation,
   useDeleteRoomCategoryMutation,

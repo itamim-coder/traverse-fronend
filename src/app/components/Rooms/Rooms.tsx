@@ -18,20 +18,26 @@ const Room = ({ params }: any) => {
 
   const { dates, options } = useAppSelector((state) => state.search);
   const router = useRouter();
+  
+  const normalizeDate = (date: Date) => {
+    const normalized = new Date(date);
+    normalized.setHours(0, 0, 0, 0);
+    return normalized;
+  };
+
   const getDatesInRange = (
     startDate: string | number | Date,
     endDate: string | number | Date
   ) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    const start = normalizeDate(new Date(startDate));
+    const end = normalizeDate(new Date(endDate));
 
     const date = new Date(start.getTime());
 
     const dates = [];
 
     while (date <= end) {
-      const isoDate = new Date(date).toISOString(); // Convert timestamp to ISO-8601
-      dates.push(isoDate);
+      dates.push(date.toISOString());
       date.setDate(date.getDate() + 1);
     }
 
@@ -43,9 +49,9 @@ const Room = ({ params }: any) => {
 
   const isAvailable = (roomNumber: { unavailableDates: any[] }) => {
     return alldates?.every((date) => {
-      const dateToCheck = new Date(date).getTime();
+      const dateToCheck = normalizeDate(new Date(date)).getTime();
       return !roomNumber?.unavailableDates?.some(
-        (unavailableDate) => new Date(unavailableDate).getTime() === dateToCheck
+        (unavailableDate) => normalizeDate(new Date(unavailableDate)).getTime() === dateToCheck
       );
     });
   };
@@ -72,8 +78,10 @@ const Room = ({ params }: any) => {
       setSelectedRooms(selectedRooms.filter((room) => room.id !== value));
     }
   };
+  
   const [reserveAroom] = useReserveAroomMutation();
   const dispatch = useAppDispatch();
+  
   const handleReserve = async () => {
     console.log(alldates);
     console.log(options);
@@ -87,6 +95,7 @@ const Room = ({ params }: any) => {
       });
     }
     console.log(totalPrice);
+    
     dispatch(
       setBookingInfo({
         days,
@@ -97,33 +106,12 @@ const Room = ({ params }: any) => {
         options: options,
       })
     );
+    
     router.push(`/hotel/${params.id}/booking`);
-    // try {
-    //   await Promise.all(
-    //     selectedRooms.map(async (roomId) => {
-    //       const unavailableDates = alldates.map((date) =>
-    //         new Date(date).toISOString()
-    //       );
-
-    //       const roomData = {
-    //         unavailableDates, // Add the unavailableDates property
-    //       };
-
-    //       const updatedData = await reserveAroom({ id: roomId, roomData });
-    //       console.log(updatedData);
-    //       // const res = axios.put(`/rooms/availability/${roomId}`, {
-    //       //   dates: alldates,
-    //       // });
-
-    //       // return res.data;
-    //     })
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   console.log(roomData?.RoomNumber);
+  
   return (
     <>
       <div className="grid grid-cols-2 gap-2">
@@ -143,7 +131,6 @@ const Room = ({ params }: any) => {
                 className="checkbox"
                 onChange={handleSelect}
                 disabled={!isAvailable(rd)}
-               
               />
               <label className="text-gray-600">Select</label>
             </div>
@@ -152,7 +139,7 @@ const Room = ({ params }: any) => {
       </div>
       <button
         onClick={handleReserve}
-        className={`w-1/2 mt-2  py-3 rounded-lg text-white font-semibold ${
+        className={`w-1/2 mt-2 py-3 rounded-lg text-white font-semibold ${
           selectedRooms.length === 0
             ? "bg-gray-300 cursor-not-allowed"
             : "bg-orange-500 hover:bg-orange-600"

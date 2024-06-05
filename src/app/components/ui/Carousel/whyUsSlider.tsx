@@ -8,7 +8,6 @@ export const WhyUsSlider = () => {
     "https://travosy.vercel.app/static/media/1.f66fa632eaccba2c9d8f.jpg",
     "https://travosy.vercel.app/static/media/3.86227d75d7bec8381222.jpg",
     "https://envato.bdevs.net/tourigo/wp-content/uploads/2024/04/blog-image-2.png",
- 
   ];
   const prevSlider = () => {
     setCurrentSlider((currentSlider) =>
@@ -47,7 +46,7 @@ export const WhyUsSlider = () => {
           ></g>
           <g id="SVGRepo_iconCarrier">
             <path
-              fill="#0095FF"
+              fill="rgb(220, 128, 82)"
               d="M685.248 104.704a64 64 0 010 90.496L368.448 512l316.8 316.8a64 64 0 01-90.496 90.496L232.704 557.248a64 64 0 010-90.496l362.048-362.048a64 64 0 0190.496 0z"
             ></path>
           </g>
@@ -97,7 +96,7 @@ export const WhyUsSlider = () => {
           ></g>
           <g id="SVGRepo_iconCarrier">
             <path
-              fill="#0095FF"
+              fill="rgb(220, 128, 82)"
               d="M685.248 104.704a64 64 0 010 90.496L368.448 512l316.8 316.8a64 64 0 01-90.496 90.496L232.704 557.248a64 64 0 010-90.496l362.048-362.048a64 64 0 0190.496 0z"
             ></path>
           </g>
