@@ -1,6 +1,7 @@
 "use client";
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
+import Alert from "@/app/components/ui/Alert/alert";
 import { getUserInfo } from "@/app/services/auth.services";
 import { useBookHotelMutation } from "@/redux/api/bookingApi";
 import { useReserveAroomMutation } from "@/redux/api/roomApi";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 import React, { useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 type FormValues = {
   email: string;
   password: string;
@@ -72,6 +74,9 @@ const HotelBooking = () => {
       console.log(data);
       const res = await hotelBooking({ ...data }).unwrap();
       console.log(res);
+      if (res.id) {
+        toast.success("Successfully Booked...");
+      }
 
       selectedRooms.map(async (roomId) => {
         const unavailableDates = dates.map((date) =>
@@ -231,6 +236,7 @@ const HotelBooking = () => {
           </div>
         </div>
       </div>
+      <Alert />
     </div>
   );
 };

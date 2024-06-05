@@ -45,11 +45,19 @@ const HotelDetails = ({ params }) => {
       </div>
 
       <div className="mt-3">
-        <div>
+        <div className="flex justify-between">
           <p className="text-xl font-semibold">
             Room Category Info :{" "}
             <span className="text-sm">{rooms?.length} Available</span>
           </p>
+          <div>
+            <Link
+              href={`/admin/manage-hotel/view-hotels/${params?.id}/create-room-category`}
+              className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md"
+            >
+              Create Room Category
+            </Link>
+          </div>
         </div>
 
         <div className="overflow-x-auto">
