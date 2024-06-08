@@ -6,7 +6,7 @@ import React from "react";
 
 const HotelBooking = () => {
   const { data: hotelData } = useUserHotelQuery(undefined);
-  const { data: tourData } = useUserTourQuery(undefined);
+
   console.log(hotelData);
 
   return (

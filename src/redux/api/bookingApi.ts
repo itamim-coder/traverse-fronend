@@ -23,19 +23,29 @@ export const bookingApi = baseApi.injectEndpoints({
       invalidatesTags: ["booking"],
     }),
     userHotel: build.query({
-      query: () => {
+      query: (arg?: Record<string, any>) => ({
+        url: `${BOOKING_URL}/user-hotel`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: any, meta: any) => {
         return {
-          url: `${BOOKING_URL}/user-hotel`,
-          method: "GET",
+          data: response,
+          meta,
         };
       },
       providesTags: ["booking"],
     }),
     userTour: build.query({
-      query: () => {
+      query: (arg?: Record<string, any>) => ({
+        url: `${BOOKING_URL}/user-tour`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: any, meta: any) => {
         return {
-          url: `${BOOKING_URL}/user-tour`,
-          method: "GET",
+          data: response,
+          meta,
         };
       },
       providesTags: ["booking"],

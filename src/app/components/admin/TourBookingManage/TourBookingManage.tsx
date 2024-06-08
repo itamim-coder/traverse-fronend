@@ -2,23 +2,15 @@
 import Loading from "@/app/components/Loading";
 import Alert from "@/app/components/ui/Alert/alert";
 import Pagination from "@/app/components/ui/Pagination/Pagination";
-import {
-  useDeleteHotelMutation,
-  useGetHotelsQuery,
-} from "@/redux/api/hotelApi";
-import {
-  useDeleteTourMutation,
-  useGetTourQuery,
-  useUpdateTourMutation,
-} from "@/redux/api/tourApi";
-import Link from "next/link";
+import { useUserHotelQuery, useUserTourQuery } from "@/redux/api/bookingApi";
+
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const ViewTours = () => {
+const TourBookingManage = () => {
   const query: Record<string, any> = {};
-  const [isChecked, setIsChecked] = useState();
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -28,47 +20,43 @@ const ViewTours = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  const { data: tours, isLoading } = useGetTourQuery({ ...query });
-  const [deleteTour] = useDeleteTourMutation();
-  const [updateTour] = useUpdateTourMutation();
+  const { data: tourBooking, isLoading } = useUserTourQuery({ ...query });
+//   const [deleteLocation] = useDeleteLocationMutation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
   if (isLoading) {
     return <Loading />;
   }
-  const meta = tours?.meta;
+  const meta = tourBooking?.meta;
 
-  const data = tours?.data.result;
-  console.log(data);
-  // Assuming location.meta.totalPages exists
+  const data = tourBooking;
+
+  // Assuming tourBooking.meta.totalPages exists
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber + 1); // Pagination starts from 0, but page state starts from 1
   };
 
-  const handleDelete = async (id: string) => {
-    toast.promise(deleteTour(id), {
-      loading: "Deleting...",
-      success: "Delete Successfully",
-      error: "Could not delete.",
-    });
-  };
+//   const handleDelete = async (id: string) => {
+//     toast.loading("Deleting....");
 
-  const handleAvailabilityToggle = async (id: string, available: boolean) => {
-    try {
-      await updateTour({ id, updatedData: { available } }); // Update the tour availability
-      toast.success("Availability updated successfully");
-    } catch (error) {
-      console.error("Error updating availability:", error);
-      toast.error("Failed to update availability");
-    }
-  };
+//     try {
+//       const res = await deleteLocation(id).unwrap();
+//       console.log(res);
+//       if (res.id) {
+//         toast.success("Delete Successfully");
+//       }
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
   return (
     <div className="m-5">
       <div>
         <p className="text-2xl font-semibold">
-          Tours Info : <span className="text-sm">{meta.total} Available</span>
+          Hotel Booking Info :{" "}
+          <span className="text-sm">{meta.total} Available</span>
         </p>
       </div>
       <div className="overflow-x-auto">
@@ -79,19 +67,13 @@ const ViewTours = () => {
                 Serial
               </th>
               <th className="py-4 px-6 text-base font-medium text-left  border-b">
-                Image
-              </th>
-              <th className="py-4 px-6 text-base font-medium text-left border-b ">
-                Package Name
-              </th>
-              <th className="py-4 px-6 text-base font-medium text-left border-b ">
                 Location
               </th>
               <th className="py-4 px-6 text-base font-medium text-left border-b ">
-                Starting Date
+                Location Name
               </th>
               <th className="py-4 px-6 text-base font-medium text-left border-b ">
-                Availability
+                Featured
               </th>
               <th className="py-4 px-6 text-base font-medium border-b text-end">
                 Action
@@ -99,7 +81,7 @@ const ViewTours = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((data: any, index: number) => (
+            {tourBooking?.data?.result.map((data: any, index: number) => (
               <>
                 <tr className="hover:bg-gray-50 border-b transition duration-300">
                   <td className="py-4 px-6 border-b text-base font-medium font-medium">
@@ -107,35 +89,19 @@ const ViewTours = () => {
                   </td>
                   <td className="py-4 px-4 flex justify-start">
                     <img
-                      src={data.images[0]}
+                      src={data.image}
                       alt="table navigate ui"
                       className="h-16 w-16 object-cover bg-gray-300"
                     />
                   </td>
                   <td className="py-4 px-6 border-b text-base font-medium">
-                    {data.title}
+                    {data.name}
                   </td>
                   <td className="py-4 px-6 border-b text-base font-medium">
-                    {data.location.name}
-                  </td>
-                  <td className="py-4 px-6 border-b text-base font-medium">
-                    {data.starting_date}
-                  </td>
-                  <td className="py-4 px-6 border-b text-base font-medium">
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-success"
-                      checked={data.available}
-                      onChange={() =>
-                        handleAvailabilityToggle(data.id, !data.available)
-                      }
-                    />
+                    {data.featured ? "Yes" : "No"}
                   </td>
                   <td className="py-4 px-6  border-b text-end">
-                    <button
-                      // href={`/admin/manage-hotel/view-hotels/${data?.id}`}
-                      className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md"
-                    >
+                    <button className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md">
                       Details
                     </button>
                     <button
@@ -162,4 +128,4 @@ const ViewTours = () => {
   );
 };
 
-export default ViewTours;
+export default TourBookingManage;
