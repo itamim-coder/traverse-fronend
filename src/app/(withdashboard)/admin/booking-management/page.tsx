@@ -50,7 +50,7 @@ const BookingManagement = () => {
                   } py-2 text-lg px-1 font-semibold`}
                   onClick={() => handleSectionChange("tour")}
                 >
-                  <span className="flex items-center">
+                  <span className="flex items-center ">
                     <SlLocationPin />
                     Tour
                   </span>

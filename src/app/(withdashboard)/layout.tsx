@@ -7,15 +7,15 @@ import NavBar from "../components/ui/navbar";
 import { authKey } from "@/constants/storageKey";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const userLoggedIn = isLoggedIn();
+  // const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log("userlog", userLoggedIn);
+  // console.log("userlog", userLoggedIn);
 
   useEffect(() => {
-    if (!userLoggedIn) {
+    if (!isLoggedIn()) {
       // removeUserInfo(authKey);
-      router.push("/login");
+      return router.push("/login");
     }
     setIsLoading(true);
   }, [router, isLoading]);

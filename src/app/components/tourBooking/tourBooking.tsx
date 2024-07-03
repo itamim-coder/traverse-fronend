@@ -6,7 +6,8 @@ import React from "react";
 
 const TourBooking = () => {
   const { data: tourData } = useUserTourQuery(undefined);
-  console.log(tourData);
+  const data = tourData?.data?.result;
+  console.log(data);
 
   return (
     <div>
@@ -25,7 +26,7 @@ const TourBooking = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {tourData?.map((dt, index) => (
+            {data?.map((dt, index) => (
               <tr>
                 <td className="w-32 mask mask-squircle">
                   <img src={dt?.tourBooks?.tourInfo?.images[0]} alt="" />

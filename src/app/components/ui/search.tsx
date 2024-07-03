@@ -46,7 +46,7 @@ const Search = () => {
   // const { dispatch } = useContext(SearchContext);
   const router = useRouter();
   const handleSearch = () => {
-    const selectedLocation = Locations.find(
+    const selectedLocation = Locations?.find(
       (Locations) => Locations.id === destination
     );
     console.log(dates);
@@ -59,7 +59,7 @@ const Search = () => {
     console.log(serializedDates);
     console.log(serializedDates.length);
     if (!selectedLocation || !dates) {
-      alert("error");
+      alert("Select location & Date first");
     } else {
       const serializedOptions = {
         adult: options.adult,
