@@ -2,7 +2,7 @@
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
 import Alert from "@/app/components/ui/Alert/alert";
-import { getUserInfo } from "@/app/services/auth.services";
+import { getUserInfo, isLoggedIn } from "@/app/services/auth.services";
 import { useBookHotelMutation } from "@/redux/api/bookingApi";
 import { useReserveAroomMutation } from "@/redux/api/roomApi";
 import { useAppSelector } from "@/redux/hooks";
@@ -17,6 +17,9 @@ type FormValues = {
 };
 const HotelBooking = () => {
   const router = useRouter();
+  if (!isLoggedIn()) {
+    return router.push("/login");
+  }
   const { dates, days, selectedRooms, totalAmount, options, roomInfo } =
     useAppSelector((state) => state.hotelBooking);
   const lastDay = dates.length - 1;

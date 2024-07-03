@@ -7,8 +7,8 @@ import React from "react";
 const HotelBooking = () => {
   const { data: hotelData } = useUserHotelQuery(undefined);
 
-  console.log(hotelData);
-
+  const data = hotelData?.data?.result;
+  console.log(data);
   return (
     <div>
       <div className="overflow-x-auto">
@@ -26,7 +26,7 @@ const HotelBooking = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {hotelData?.map((dt, index) => (
+            {data?.map((dt, index) => (
               <tr>
                 <td className="w-32 mask mask-squircle">
                   <img

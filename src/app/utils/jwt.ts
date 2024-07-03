@@ -10,3 +10,15 @@ export const decodedToken = (token: string) => {
   }
   return jwtDecode(token);
 };
+
+export const isTokenExpired = (token: string) => {
+  try {
+    const decoded: any = jwtDecode(token);
+    if (decoded.exp * 1000 < Date.now()) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    return true; // If there's an error decoding, consider the token as expired
+  }
+};

@@ -2,7 +2,7 @@
 import FormInput from "@/app/components/Forms/FormInput";
 import Form from "@/app/components/Forms/form";
 import Alert from "@/app/components/ui/Alert/alert";
-import { getUserInfo } from "@/app/services/auth.services";
+import { getUserInfo, isLoggedIn } from "@/app/services/auth.services";
 import { useBookTourMutation } from "@/redux/api/bookingApi";
 
 import { useAppSelector } from "@/redux/hooks";
@@ -17,6 +17,9 @@ type FormValues = {
 };
 const TourBooking = () => {
   const router = useRouter();
+  if (!isLoggedIn()) {
+    return router.push("/login");
+  }
   const { totalAmount, options, tourInfo } = useAppSelector(
     (state) => state.tourBooking
   );

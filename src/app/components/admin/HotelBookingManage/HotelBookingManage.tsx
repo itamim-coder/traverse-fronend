@@ -56,7 +56,7 @@ const HotelBookingManage = () => {
       <div>
         <p className="text-2xl font-semibold">
           Hotel Booking Info :{" "}
-          <span className="text-sm">{meta.total} Available</span>
+          <span className="text-sm">{meta?.total} Available</span>
         </p>
       </div>
       <div className="overflow-x-auto">
@@ -84,28 +84,28 @@ const HotelBookingManage = () => {
             {hotelBooking?.data?.result.map((data: any, index: number) => (
               <>
                 <tr className="hover:bg-gray-50 border-b transition duration-300">
-                  <td className="py-4 px-6 border-b text-base font-medium font-medium">
+                  <td className="py-4 px-6 border-b text-base font-medium">
                     {index + 1}
                   </td>
                   <td className="py-4 px-4 flex justify-start">
                     <img
-                      src={data.image}
+                      src={data?.image}
                       alt="table navigate ui"
                       className="h-16 w-16 object-cover bg-gray-300"
                     />
                   </td>
                   <td className="py-4 px-6 border-b text-base font-medium">
-                    {data.name}
+                    {data?.name}
                   </td>
                   <td className="py-4 px-6 border-b text-base font-medium">
-                    {data.featured ? "Yes" : "No"}
+                    {data?.featured ? "Yes" : "No"}
                   </td>
                   <td className="py-4 px-6  border-b text-end">
                     <button className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md">
                       Details
                     </button>
                     <button
-                      onClick={() => handleDelete(data.id)}
+                      onClick={() => handleDelete(data?.id)}
                       className="bg-red-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md"
                     >
                       Delete
