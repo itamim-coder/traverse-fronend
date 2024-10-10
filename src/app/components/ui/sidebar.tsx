@@ -1,9 +1,15 @@
 import { getUserInfo } from "@/app/services/auth.services";
 import { SideBarItems } from "@/constants/sidebarItem";
+import { authOptions } from "@/lib/AuthOptions";
+import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const SideBar = () => {
+  const session = useSession();
+
+  console.log("sidebar", session);
   const [userRole, setUserRole] = useState("");
   // const [isActive, setIsActive] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -13,11 +19,16 @@ const SideBar = () => {
   const handleAccordionToggle = (idx) => {
     setActiveAccordion((prevIdx) => (prevIdx === idx ? null : idx));
   };
+  // const userRole = session?.data?.data?.role;
   useEffect(() => {
     const { role } = getUserInfo() as any;
+    console.log(role);
     setUserRole(role);
+    if (!role) {
+      setUserRole(session?.data?.data?.role);
+    }
   }, []);
-  console.log("userRole", userRole);
+
   const menus = SideBarItems(userRole);
 
   return (

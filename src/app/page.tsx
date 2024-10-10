@@ -15,7 +15,6 @@ import Review from "./components/Review/Review";
 function Home() {
   return (
     <RootLayout>
-      <NavBar />
       <div className="bg-background">
         <Hero></Hero>
         <IntroOne />

@@ -5,7 +5,7 @@ import Footer from "../components/ui/footer";
 const WebLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       {children}
       <Footer />
     </>

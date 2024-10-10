@@ -1,26 +1,34 @@
-import 'react-day-picker/dist/style.css';
+import "react-day-picker/dist/style.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import Providers from "@/lib/Providers";
+import { authOptions } from "@/lib/AuthOptions";
+import { getServerSession } from "next-auth";
+import NavBar from "./components/ui/navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const jost = Jost({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HOME | TRAVERSE",
   description: "Home Page",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+  // console.log(session, "main layout")
   return (
-    <Providers>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </Providers>
+    <html lang="en">
+      <Providers>
+        <body className={jost.className}>
+          <NavBar session={session} />
+          {children}
+        </body>
+      </Providers>
+    </html>
   );
 }

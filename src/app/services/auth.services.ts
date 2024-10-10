@@ -3,25 +3,30 @@ import { setToLocalStorage, getFromLocalStorage } from "../utils/local-storage";
 import { decodedToken, isTokenExpired } from "../utils/jwt";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { getBaseUrl } from "@/helpers/config/envConfig";
+import { authOptions } from "@/lib/AuthOptions";
+import { getServerSession } from "next-auth";
+import { getAccessToken } from "@/helpers/token";
 
 export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
-  console.log(accessToken);
+  // console.log(accessToken);
   return setToLocalStorage(authKey, accessToken as string);
 };
 
 export const getUserInfo = () => {
-  const authToken = getFromLocalStorage(authKey);
+  let authToken = getFromLocalStorage(authKey);
   console.log("auth", authToken);
+  // if (!authToken) {
+  //   authToken = await getAccessToken();
+  // }
   const expired = isTokenExpired(authToken);
-  console.log("valid",expired);
+  // console.log("valid",expired);
   if (!expired) {
     const decodedData = decodedToken(authToken);
-    console.log("dec", decodedData);
+    // console.log("dec", decodedData);
     return decodedData;
-  } else {
-    removeUserInfo(authKey)
-    return "";
   }
+
+  return "";
 };
 
 export const getNewAccessToken = async () => {
@@ -42,10 +47,16 @@ export const getNewAccessToken = async () => {
 
 export const isLoggedIn = () => {
   const authToken = getFromLocalStorage(authKey);
+
   // const refreshToken = getCookie("refreshToken");
-  // console.log("ref", refreshToken);
+
   return !!authToken;
 };
+
+// export const isGoogleLoggedIn = async () => {
+//   const session = await getServerSession(authOptions);
+//   console.log(session);
+// };
 export const token = () => {
   const authToken = getFromLocalStorage(authKey);
   return authToken;
@@ -53,7 +64,7 @@ export const token = () => {
 
 export const removeUserInfo = (key: string) => {
   const data = localStorage.removeItem(key);
-  console.log(data);
+  // console.log(data);
   // window.location.reload();
   return data;
 };

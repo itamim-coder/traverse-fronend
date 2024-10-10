@@ -2,13 +2,17 @@
 
 import { getUserInfo, removeUserInfo } from "@/app/services/auth.services";
 import { authKey } from "@/constants/storageKey";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { CgProfile } from "react-icons/cg";
 
-const NavBar = () => {
+const NavBar = ({ session }: { session: any }) => {
+  console.log("session", session);
+
   const { email } = getUserInfo();
+
   // useEffect(() => {
   //   const authToken = getUserInfo().accessToken;
   //   if (authToken) {
@@ -24,6 +28,11 @@ const NavBar = () => {
   const logOut = () => {
     removeUserInfo(authKey);
     router.refresh();
+  };
+  const googleLogout = () => {
+    signOut().then(() => {
+      logOut(); // Trigger local log out after Google logout
+    });
   };
   return (
     <div className="navbar  bg-base-100">
@@ -96,7 +105,7 @@ const NavBar = () => {
         </ul> */}
       </div>
       <div className="navbar-end">
-        {email ? (
+        {session?.user || email ? (
           <>
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -118,9 +127,20 @@ const NavBar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a onClick={logOut} key="logout">
-                    Logout
-                  </a>
+                  {session?.user ? (
+                    <>
+                      <a onClick={googleLogout} key="googleLogout">
+                        Logout
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <a onClick={logOut} key="logout">
+                        Logout
+                      </a>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>

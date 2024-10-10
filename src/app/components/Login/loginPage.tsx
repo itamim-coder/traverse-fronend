@@ -10,6 +10,7 @@ import { storeUserInfo } from "@/app/services/auth.services";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import Alert from "../ui/Alert/alert";
+import { signIn } from "next-auth/react";
 
 type FormValues = {
   email: string;
@@ -20,10 +21,10 @@ const LoginPage = () => {
   const [userLogin] = useUserLoginMutation();
   const router = useRouter();
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
-    console.log(data);
+    console.log("login", data);
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log(res);
+      console.log("rs login", res);
       if (res?.accessToken) {
         toast("Login Successfully");
         storeUserInfo({ accessToken: res?.accessToken });
@@ -31,7 +32,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Error!!");
+      // toast.error("Error!!");
     }
   };
   return (
@@ -86,7 +87,15 @@ const LoginPage = () => {
             <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
           </div>
           <div className="flex justify-center space-x-4">
-            <button aria-label="Log in with Google" className="p-3 rounded-sm">
+            <button
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "http://localhost:3000",
+                })
+              }
+              aria-label="Log in with Google"
+              className="p-3 rounded-sm"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"

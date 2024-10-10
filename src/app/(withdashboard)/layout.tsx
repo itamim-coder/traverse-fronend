@@ -5,20 +5,34 @@ import { isLoggedIn, removeUserInfo, token } from "../services/auth.services";
 import { useRouter } from "next/navigation";
 import NavBar from "../components/ui/navbar";
 import { authKey } from "@/constants/storageKey";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/AuthOptions";
+import { useSession } from "next-auth/react";
+import { getFromLocalStorage } from "../utils/local-storage";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // console.log("userlog", userLoggedIn);
 
+  // console.log("userlog", userLoggedIn);
+  // const session = await getServerSession(authOptions);
+  // console.log("dashboard", session);
+  const session = useSession();
+  console.log("session from layout", session);
+  // const authToken = getFromLocalStorage("next-auth.session-token");
+  // console.log("layout auth", authToken);
   useEffect(() => {
-    if (!isLoggedIn()) {
+    if (!isLoggedIn() && !session.data?.data?.email) {
       // removeUserInfo(authKey);
       return router.push("/login");
     }
     setIsLoading(true);
-  }, [router, isLoading]);
+  }, [router, isLoading, session]);
   return (
     <>
       <html lang="en">
@@ -62,6 +76,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </html>
     </>
   );
-};
-
-export default DashboardLayout;
+}
