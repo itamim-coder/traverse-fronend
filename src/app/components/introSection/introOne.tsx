@@ -5,6 +5,7 @@ import icon1 from "../../../../public/assets/IntroOne/icon.png";
 import icon2 from "../../../../public/assets/IntroOne/icon1.png";
 import icon3 from "../../../../public/assets/IntroOne/school-bus.png";
 import icon4 from "../../../../public/assets/IntroOne/atom.png";
+import Container from "../ui/Container";
 
 const introData = [
   {
@@ -35,15 +36,18 @@ const introData = [
 
 const IntroOne = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:justify-evenly md:px-20 py-10">
-      {introData.map((data, index) => (
-        <div className="grid place-items-center text-center" key={index}>
-          <Image src={data.image} alt="me" width="64" height="64" />
-          <h1 className="py-3 font-bold text-xl">{data.title}</h1>
-          <p className="text-center text-slate-600">{data.description}</p>
-        </div>
-      ))}
-    </div>
+    <Container>
+      {" "}
+      <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:justify-evenly py-10">
+        {introData.map((data, index) => (
+          <div className="grid place-items-center text-center" key={index}>
+            <Image src={data.image} alt="me" width="64" height="64" />
+            <h1 className="py-3 font-bold text-xl">{data.title}</h1>
+            <p className="text-center text-slate-600">{data.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
   );
 };
 

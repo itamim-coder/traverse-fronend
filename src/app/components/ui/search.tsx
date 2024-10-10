@@ -109,7 +109,7 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="bg-slate-200 py-5 rounded-full bg-opacity-25">
+    <div className="bg-slate-200 py-3 px-5 rounded-full bg-opacity-25">
       <div className="">
         <div className="flex gap-3  items-center justify-between">
           <div className="w-full mb-4 md:mb-0">

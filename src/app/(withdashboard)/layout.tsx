@@ -9,7 +9,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/AuthOptions";
 import { useSession } from "next-auth/react";
 import { getFromLocalStorage } from "../utils/local-storage";
-
+import { Jost } from "next/font/google";
+const jost = Jost({ subsets: ["latin"] });
 export default function DashboardLayout({
   children,
 }: {
@@ -36,7 +37,7 @@ export default function DashboardLayout({
   return (
     <>
       <html lang="en">
-        <body>
+        <body className={jost.className}>
           {/* <NavBar /> */}
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
