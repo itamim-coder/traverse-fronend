@@ -78,7 +78,7 @@ const getStars = (rating) => {
 
 const ReviewSlider = () => {
   return (
-    <div className="p-24">
+    <div className="py-12">
       <Splide
         options={{
           type: "loop",

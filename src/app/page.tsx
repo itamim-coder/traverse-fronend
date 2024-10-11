@@ -11,6 +11,7 @@ import Footer from "./components/ui/footer";
 import { Toaster } from "react-hot-toast";
 import WhyUs from "./components/WhyUs/whyus";
 import Review from "./components/Review/Review";
+import CtaSection from "./components/ui/Cta";
 
 function Home() {
   return (
@@ -23,6 +24,7 @@ function Home() {
         <FeaturedTour />
         <WhyUs />
         <Review />
+        <CtaSection />
       </div>
       <Footer />
       <Toaster />
