@@ -10,6 +10,7 @@ import { authOptions } from "@/lib/AuthOptions";
 import { useSession } from "next-auth/react";
 import { getFromLocalStorage } from "../utils/local-storage";
 import { Jost } from "next/font/google";
+import Link from "next/link";
 const jost = Jost({ subsets: ["latin"] });
 export default function DashboardLayout({
   children,
@@ -62,9 +63,13 @@ export default function DashboardLayout({
                 </div>
                 <div className="flex-none gap-2">
                   <div className="avatar mr-2">
-                    <div className="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      {/* <UserButton afterSignOutUrl="/" /> */}
-                    </div>
+                    {" "}
+                    <Link
+                      href="/"
+                      className="border border-1 p-2 rounded-md border-orange-500 font-semibold normal-case text-md"
+                    >
+                      Home
+                    </Link>
                   </div>
                 </div>
               </div>
