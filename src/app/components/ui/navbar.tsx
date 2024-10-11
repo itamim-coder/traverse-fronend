@@ -2,24 +2,43 @@
 
 import { getUserInfo, removeUserInfo } from "@/app/services/auth.services";
 import { authKey } from "@/constants/storageKey";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { CgProfile } from "react-icons/cg";
 
-const NavBar = () => {
+const NavBar = ({ session }: { session: any }) => {
+  console.log("session", session);
+
   const { email } = getUserInfo();
+
+  // useEffect(() => {
+  //   const authToken = getUserInfo().accessToken;
+  //   if (authToken) {
+  //     if (isTokenExpired(authToken)) {
+  //       handleLogout();
+  //     } else {
+  //       setEmail(getUserInfo().email);
+  //     }
+  //   }
+  // }, []);
   console.log("navbar", email);
   const router = useRouter();
   const logOut = () => {
     removeUserInfo(authKey);
     router.refresh();
   };
+  const googleLogout = () => {
+    signOut().then(() => {
+      logOut(); // Trigger local log out after Google logout
+    });
+  };
   return (
     <div className="navbar  bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          {/* <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -34,8 +53,8 @@ const NavBar = () => {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </label>
-          <ul
+          </label> */}
+          {/* <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
@@ -56,14 +75,14 @@ const NavBar = () => {
             <li>
               <a>Item 3</a>
             </li>
-          </ul>
+          </ul> */}
         </div>
         <Link href="/" className="btn btn-ghost normal-case text-xl">
           TraVerse.
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        {/* <ul className="menu menu-horizontal px-1">
           <li>
             <a>Item 1</a>
           </li>
@@ -83,10 +102,10 @@ const NavBar = () => {
           <li>
             <a>Item 3</a>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="navbar-end">
-        {email ? (
+        {session?.user || email ? (
           <>
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -101,16 +120,27 @@ const NavBar = () => {
                 <li>
                   <Link href={"/profile"} className="justify-between">
                     Profile
-                    <span className="badge">New</span>
+                    {/* <span className="badge">New</span> */}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <a>Settings</a>
-                </li>
+                </li> */}
                 <li>
-                  <a onClick={logOut} key="logout">
-                    Logout
-                  </a>
+                  {session?.user ? (
+                    <>
+                      <a onClick={googleLogout} key="googleLogout">
+                        Logout
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <a onClick={logOut} key="logout">
+                        Logout
+                      </a>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>

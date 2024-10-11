@@ -1,195 +1,176 @@
-import React from "react";
+const FooterItem = ({ text, link }) => {
+  return (
+    <li>
+      <a href={link} className="duration-200 hover:text-blue-600">
+        {text}
+      </a>
+    </li>
+  );
+};
+
+const FooterBlockItem = ({ title, items }) => {
+  return (
+    <div className="space-y-6">
+      <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+      <ul className="space-y-3">
+        {items.map((item) => (
+          <FooterItem key={item.id} {...item} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const footerBlocks = [
+  {
+    id: 1,
+    title: "Company",
+    items: [
+      {
+        id: 1,
+        text: "About",
+        link: "#",
+      },
+      {
+        id: 2,
+        text: "Career",
+        link: "#",
+      },
+      {
+        id: 3,
+        text: "Contact",
+        link: "#",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Support",
+    items: [
+      {
+        id: 1,
+        text: "Blog",
+        link: "#",
+      },
+      {
+        id: 2,
+        text: "Privacy",
+        link: "#",
+      },
+      {
+        id: 3,
+        text: "Terms",
+        link: "#",
+      },
+      {
+        id: 4,
+        text: "FAQ",
+        link: "#",
+      },
+    ],
+  },
+];
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="py-6 dark:bg-gray-800 dark:text-gray-50">
-        <div className="container px-6 mx-auto space-y-6 divide-y dark:divide-gray-400 md:space-y-12 divide-opacity-50">
-          <div className="grid grid-cols-12">
-            <div className="pb-6 col-span-full md:pb-0 md:col-span-6">
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                className="flex justify-center space-x-3 md:justify-start"
-              >
-                <div className="flex items-center justify-center w-12 h-12 rounded-full dark:bg-violet-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 32 32"
-                    fill="currentColor"
-                    className="flex-shrink-0 w-5 h-5 rounded-full dark:text-gray-900"
-                  >
-                    <path d="M18.266 26.068l7.839-7.854 4.469 4.479c1.859 1.859 1.859 4.875 0 6.734l-1.104 1.104c-1.859 1.865-4.875 1.865-6.734 0zM30.563 2.531l-1.109-1.104c-1.859-1.859-4.875-1.859-6.734 0l-6.719 6.734-6.734-6.734c-1.859-1.859-4.875-1.859-6.734 0l-1.104 1.104c-1.859 1.859-1.859 4.875 0 6.734l6.734 6.734-6.734 6.734c-1.859 1.859-1.859 4.875 0 6.734l1.104 1.104c1.859 1.859 4.875 1.859 6.734 0l21.307-21.307c1.859-1.859 1.859-4.875 0-6.734z"></path>
-                  </svg>
-                </div>
-                <span className="self-center text-2xl font-semibold">
-                  TraVerse
-                </span>
-              </a>
-            </div>
-            <div className="col-span-6 text-center md:text-left md:col-span-3">
-              <p className="pb-1 text-lg font-medium">Category</p>
-              <ul>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="col-span-6 text-center md:text-left md:col-span-3">
-              <p className="pb-1 text-lg font-medium">Category</p>
-              <ul>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="hover:dark:text-violet-400"
-                  >
-                    Link
-                  </a>
-                </li>
-              </ul>
-            </div>
+    <footer className="bg-[#FFFFFF]  text-gray-700">
+      <div className="max-w-7xl mx-auto  sm:px-10 md:px-12 lg:px-0 grid grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-16 py-20">
+        <div className="space-y-6 col-span-2">
+          <a href="#">
+            <span className="text-transparent bg-clip-text bg-gradient-to-tr from-blue-800 to-indigo-400 font-bold text-2xl">
+              T
+            </span>
+            Traverse
+          </a>
+          <p className="max-w-lg">
+            We make your dream more beautiful & enjoyful with lots of happiness.
+          </p>
+        </div>
+
+        {footerBlocks.map((footerBlock) => (
+          <FooterBlockItem key={footerBlock.id} {...footerBlock} />
+        ))}
+
+        <div className="space-y-6 col-span-2">
+          <h1 className="text-lg font-semibold text-gray-900">
+            Payment Methods
+          </h1>
+          <div className="text-center md:text-left ">
+            <img
+              src="https://shreethemes.net/geotrip-live/geotrip/assets/img/payment.png"
+              alt=""
+            />
           </div>
-          <div className="grid justify-center pt-6 lg:justify-between">
-            <div className="flex flex-col self-center text-sm text-center md:block lg:col-start-1 md:space-x-6">
-              <span>©2023 All rights reserved</span>
-              <a rel="noopener noreferrer" href="#">
-                <span>Privacy policy</span>
-              </a>
-              <a rel="noopener noreferrer" href="#">
-                <span>Terms of service</span>
-              </a>
-            </div>
-            <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                title="Email"
-                className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-violet-400 dark:text-gray-900"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                </svg>
-              </a>
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                title="Twitter"
-                className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-violet-400 dark:text-gray-900"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 50 50"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path d="M 50.0625 10.4375 C 48.214844 11.257813 46.234375 11.808594 44.152344 12.058594 C 46.277344 10.785156 47.910156 8.769531 48.675781 6.371094 C 46.691406 7.546875 44.484375 8.402344 42.144531 8.863281 C 40.269531 6.863281 37.597656 5.617188 34.640625 5.617188 C 28.960938 5.617188 24.355469 10.21875 24.355469 15.898438 C 24.355469 16.703125 24.449219 17.488281 24.625 18.242188 C 16.078125 17.8125 8.503906 13.71875 3.429688 7.496094 C 2.542969 9.019531 2.039063 10.785156 2.039063 12.667969 C 2.039063 16.234375 3.851563 19.382813 6.613281 21.230469 C 4.925781 21.175781 3.339844 20.710938 1.953125 19.941406 C 1.953125 19.984375 1.953125 20.027344 1.953125 20.070313 C 1.953125 25.054688 5.5 29.207031 10.199219 30.15625 C 9.339844 30.390625 8.429688 30.515625 7.492188 30.515625 C 6.828125 30.515625 6.183594 30.453125 5.554688 30.328125 C 6.867188 34.410156 10.664063 37.390625 15.160156 37.472656 C 11.644531 40.230469 7.210938 41.871094 2.390625 41.871094 C 1.558594 41.871094 0.742188 41.824219 -0.0585938 41.726563 C 4.488281 44.648438 9.894531 46.347656 15.703125 46.347656 C 34.617188 46.347656 44.960938 30.679688 44.960938 17.09375 C 44.960938 16.648438 44.949219 16.199219 44.933594 15.761719 C 46.941406 14.3125 48.683594 12.5 50.0625 10.4375 Z"></path>
-                </svg>
-              </a>
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                title="GitHub"
-                className="flex items-center justify-center w-10 h-10 rounded-full dark:bg-violet-400 dark:text-gray-900"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  className="w-5 h-5"
-                >
-                  <path d="M10.9,2.1c-4.6,0.5-8.3,4.2-8.8,8.7c-0.5,4.7,2.2,8.9,6.3,10.5C8.7,21.4,9,21.2,9,20.8v-1.6c0,0-0.4,0.1-0.9,0.1 c-1.4,0-2-1.2-2.1-1.9c-0.1-0.4-0.3-0.7-0.6-1C5.1,16.3,5,16.3,5,16.2C5,16,5.3,16,5.4,16c0.6,0,1.1,0.7,1.3,1c0.5,0.8,1.1,1,1.4,1 c0.4,0,0.7-0.1,0.9-0.2c0.1-0.7,0.4-1.4,1-1.8c-2.3-0.5-4-1.8-4-4c0-1.1,0.5-2.2,1.2-3C7.1,8.8,7,8.3,7,7.6C7,7.2,7,6.6,7.3,6 c0,0,1.4,0,2.8,1.3C10.6,7.1,11.3,7,12,7s1.4,0.1,2,0.3C15.3,6,16.8,6,16.8,6C17,6.6,17,7.2,17,7.6c0,0.8-0.1,1.2-0.2,1.4 c0.7,0.8,1.2,1.8,1.2,3c0,2.2-1.7,3.5-4,4c0.6,0.5,1,1.4,1,2.3v2.6c0,0.3,0.3,0.6,0.7,0.5c3.7-1.5,6.3-5.1,6.3-9.3 C22,6.1,16.9,1.4,10.9,2.1z"></path>
-                </svg>
-              </a>
-            </div>
+          <h1 className="text-lg font-semibold text-gray-900">Our Partners</h1>
+          <div className=" grid grid-cols-3  my-3">
+            <img
+              src="https://shreethemes.net/geotrip-live/geotrip/assets/img/mytrip.png"
+              alt=""
+              className="w-20 h-12 object-contain"
+            />
+            <img
+              src="https://shreethemes.net/geotrip-live/geotrip/assets/img/tripadv.png"
+              alt=""
+              className="w-20 h-12 object-contain"
+            />
+            <img
+              src="https://shreethemes.net/geotrip-live/geotrip/assets/img/goibibo.png"
+              alt=""
+              className="w-20 h-12 object-contain"
+            />
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-5 sm:px-10 md:px-12 lg:px-5">
+        <div className="w-full flex flex-col md:flex-row gap-4 items-center sm:justify-between py-3 border-t border-gray-200  text-gray-700 ">
+          <div className="flex text-center sm:text-left sm:min-w-max">
+            <p> © 2024 TraVerse. All right reserved </p>
+          </div>
+          <div className="flex justify-center sm:justify-end w-full gap-3">
+            <a href="#" aria-label="social link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className="w-5 h-5"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="social link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className="w-5 h-5"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="social link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className="w-5 h-5"
+                viewBox="0 0 16 16"
+              >
+                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="social link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className="w-5 h-5"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

@@ -1,24 +1,45 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/ui/sidebar";
-import { isLoggedIn } from "../services/auth.services";
+import { isLoggedIn, removeUserInfo, token } from "../services/auth.services";
 import { useRouter } from "next/navigation";
-
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const userLoggedIn = isLoggedIn();
+import NavBar from "../components/ui/navbar";
+import { authKey } from "@/constants/storageKey";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/AuthOptions";
+import { useSession } from "next-auth/react";
+import { getFromLocalStorage } from "../utils/local-storage";
+import { Jost } from "next/font/google";
+import Link from "next/link";
+const jost = Jost({ subsets: ["latin"] });
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // const userLoggedIn = isLoggedIn();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log("userlog", userLoggedIn);
+
+  // console.log("userlog", userLoggedIn);
+  // const session = await getServerSession(authOptions);
+  // console.log("dashboard", session);
+  const session = useSession();
+  console.log("session from layout", session);
+  // const authToken = getFromLocalStorage("next-auth.session-token");
+  // console.log("layout auth", authToken);
   useEffect(() => {
-    if (!userLoggedIn) {
-      router.push("/login");
+    if (!isLoggedIn() && !session.data?.data?.email) {
+      // removeUserInfo(authKey);
+      return router.push("/login");
     }
     setIsLoading(true);
-  }, [router, isLoading]);
+  }, [router, isLoading, session]);
   return (
     <>
       <html lang="en">
-        <body>
+        <body className={jost.className}>
+          {/* <NavBar /> */}
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content overflow-x-hidden">
@@ -42,9 +63,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
                 <div className="flex-none gap-2">
                   <div className="avatar mr-2">
-                    <div className="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      {/* <UserButton afterSignOutUrl="/" /> */}
-                    </div>
+                    {" "}
+                    <Link
+                      href="/"
+                      className="border border-1 p-2 rounded-md border-orange-500 font-semibold normal-case text-md"
+                    >
+                      Home
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -57,6 +82,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </html>
     </>
   );
-};
-
-export default DashboardLayout;
+}
