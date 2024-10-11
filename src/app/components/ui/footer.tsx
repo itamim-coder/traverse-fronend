@@ -41,16 +41,6 @@ const footerBlocks = [
         text: "Contact",
         link: "#",
       },
-      {
-        id: 4,
-        text: "Services",
-        link: "#",
-      },
-      {
-        id: 5,
-        text: "Services",
-        link: "#",
-      },
     ],
   },
   {
@@ -134,7 +124,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-10 md:px-12 lg:px-5">
         <div className="w-full flex flex-col md:flex-row gap-4 items-center sm:justify-between py-3 border-t border-gray-200  text-gray-700 ">
           <div className="flex text-center sm:text-left sm:min-w-max">
-            <p> © 2023 UnifyUI. All right reserved </p>
+            <p> © 2024 TraVerse. All right reserved </p>
           </div>
           <div className="flex justify-center sm:justify-end w-full gap-3">
             <a href="#" aria-label="social link">

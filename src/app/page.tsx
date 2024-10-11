@@ -12,10 +12,13 @@ import { Toaster } from "react-hot-toast";
 import WhyUs from "./components/WhyUs/whyus";
 import Review from "./components/Review/Review";
 import CtaSection from "./components/ui/Cta";
-
-function Home() {
+import { authOptions } from "@/lib/AuthOptions";
+import { getServerSession } from "next-auth";
+const Home = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <RootLayout>
+      <NavBar session={session} />
       <div className="bg-background">
         <Hero></Hero>
         <IntroOne />
@@ -30,6 +33,6 @@ function Home() {
       <Toaster />
     </RootLayout>
   );
-}
+};
 
 export default dynamic(() => Promise.resolve(Home), { ssr: false });

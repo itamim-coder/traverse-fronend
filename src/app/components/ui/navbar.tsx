@@ -38,7 +38,7 @@ const NavBar = ({ session }: { session: any }) => {
     <div className="navbar  bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          {/* <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -53,7 +53,7 @@ const NavBar = ({ session }: { session: any }) => {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </label>
+          </label> */}
           {/* <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
@@ -120,12 +120,12 @@ const NavBar = ({ session }: { session: any }) => {
                 <li>
                   <Link href={"/profile"} className="justify-between">
                     Profile
-                    <span className="badge">New</span>
+                    {/* <span className="badge">New</span> */}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <a>Settings</a>
-                </li>
+                </li> */}
                 <li>
                   {session?.user ? (
                     <>

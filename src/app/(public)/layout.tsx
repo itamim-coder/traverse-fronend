@@ -3,14 +3,19 @@ import NavBar from "../components/ui/navbar";
 import Footer from "../components/ui/footer";
 import { Jost } from "next/font/google";
 const jost = Jost({ subsets: ["latin"] });
-const WebLayout = ({ children }: { children: React.ReactNode }) => {
+import { authOptions } from "@/lib/AuthOptions";
+import { getServerSession } from "next-auth";
+export default async function WebLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await getServerSession(authOptions);
   return (
     <div className={jost.className}>
-      {/* <NavBar /> */}
+      <NavBar session={session} />
       {children}
       <Footer />
     </div>
   );
-};
-
-export default WebLayout;
+}

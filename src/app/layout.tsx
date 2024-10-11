@@ -25,7 +25,8 @@ export default async function RootLayout({
     <html lang="en">
       <Providers>
         <body className={jost.className}>
-          <NavBar session={session} />
+           {/* <NavBar session={session} /> */}
+         
           {children}
         </body>
       </Providers>

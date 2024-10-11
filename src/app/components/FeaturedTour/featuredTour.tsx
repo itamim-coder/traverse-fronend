@@ -37,7 +37,7 @@ const FeaturedTour = () => {
                   <div className="md:w-1/3">
                     <img
                       src={tour.images[0]}
-                      className="w-full h-40 md:h-52 object-cover"
+                      className="w-full h-full object-cover"
                       alt={tour.title}
                     />
                   </div>
@@ -46,7 +46,7 @@ const FeaturedTour = () => {
                       <p className="text-lg font-semibold">{tour.title}</p>
                       <p className="text-sm text-gray-600">{tour.duration}</p>
                     </div>
-                    <div className="flex justify-between mt-4">
+                    <div className="flex justify-between mt-2">
                       <p className="flex items-center text-sm">
                         <BiSolidTimeFive className="text-lg mr-2" />
                         <span>
