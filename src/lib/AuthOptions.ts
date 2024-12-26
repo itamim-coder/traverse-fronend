@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
       if (account.provider === "google") {
         try {
           const res = await fetch(
-            `http://localhost:3030/api/v1/auth/google-signin`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google-signin`,
             {
               method: "POST",
               body: JSON.stringify(user),
