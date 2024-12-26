@@ -3,11 +3,13 @@
 import { getUserInfo, removeUserInfo } from "@/app/services/auth.services";
 import { authKey } from "@/constants/storageKey";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { CgProfile } from "react-icons/cg";
-
+import typoLogo from "../../../../public/assets/Black and White Square Entertainment Logo.png";
+import Logo from "../../../../public/assets/Green Modern and Minimalistic Travel Typography Logo.png";
 const NavBar = ({ session }: { session: any }) => {
   console.log("session", session);
 
@@ -77,8 +79,14 @@ const NavBar = ({ session }: { session: any }) => {
             </li>
           </ul> */}
         </div>
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
-          TraVerse.
+        <Link href="/" className="flex  text-xl">
+          <Image
+            src={typoLogo}
+            alt="Logo"
+            width={50}
+            height={50}
+             className="rounded-full border border-black"
+          />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

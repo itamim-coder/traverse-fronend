@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Logo from "../../../../public/assets/Green Modern and Minimalistic Travel Typography Logo.png";
+
 const FooterItem = ({ text, link }) => {
   return (
     <li>
@@ -76,12 +79,7 @@ const Footer = () => {
     <footer className="bg-[#FFFFFF]  text-gray-700">
       <div className="max-w-7xl mx-auto  sm:px-10 md:px-12 lg:px-0 grid grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-16 py-20">
         <div className="space-y-6 col-span-2">
-          <a href="#">
-            <span className="text-transparent bg-clip-text bg-gradient-to-tr from-blue-800 to-indigo-400 font-bold text-2xl">
-              T
-            </span>
-            Traverse
-          </a>
+          <Image src={Logo} alt="Logo" width={90} height={50} className=""/>
           <p className="max-w-lg">
             We make your dream more beautiful & enjoyful with lots of happiness.
           </p>
