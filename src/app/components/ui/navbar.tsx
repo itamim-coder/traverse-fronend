@@ -37,7 +37,7 @@ const NavBar = ({ session }: { session: any }) => {
     });
   };
   return (
-    <div className="navbar  bg-base-100">
+    <div className="navbar max-w-7xl mx-auto   bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           {/* <label tabIndex={0} className="btn btn-ghost lg:hidden">

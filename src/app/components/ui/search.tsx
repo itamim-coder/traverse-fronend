@@ -33,7 +33,7 @@ const Search = () => {
   const { data: locations, isLoading } = useGetLocationQuery(undefined);
   // const { user } = useContext(AuthContext);
   const Locations = locations?.data.result;
-  console.log(Locations)
+  console.log(Locations);
   const handleOption = (name: any, operation: any) => {
     setOptions((prev) => {
       return {
@@ -110,15 +110,15 @@ const Search = () => {
 
   return (
     <div className="bg-slate-200 py-3 px-5 rounded-full bg-opacity-25">
-      <div className="">
-        <div className="flex gap-3  items-center justify-between">
-          <div className="w-full mb-4 md:mb-0">
-            <div className="relative ">
+      <div>
+        <div className="flex flex-wrap gap-4 items-center justify-between md:flex-nowrap">
+          {/* Destination Selector */}
+          <div className="w-full md:w-auto mb-4 md:mb-0">
+            <div className="relative">
               <select
                 className="w-full px-4 py-3 text-white bg-gray-700 rounded-full focus:outline-none focus:ring focus:ring-blue-500"
                 onChange={(e) => setDestination(e.target.value)}
               >
-                <FaLocationDot />
                 <option value="">Select your destination</option>
                 {Locations?.map((location) => (
                   <option key={location.id} value={location.id}>
@@ -129,11 +129,12 @@ const Search = () => {
             </div>
           </div>
 
-          <div className="w-full  mb-4 md:mb-0">
+          {/* Date Selector */}
+          <div className="w-full md:w-auto mb-4 md:mb-0">
             <div className="relative">
               <span
                 onClick={() => setOpenDate(!openDate)}
-                className="block text-nowrap cursor-pointer text-white px-4 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
+                className="block cursor-pointer text-white px-4 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
               >
                 {`${format(dates[0].startDate, "MM/dd/yyyy")} - ${format(
                   dates[0].endDate,
@@ -155,20 +156,21 @@ const Search = () => {
               )}
             </div>
           </div>
-          <div className="w-full  items-center ">
+
+          {/* Options Selector */}
+          <div className="w-full md:w-auto mb-4 md:mb-0">
             <div className="relative" ref={optionsRef}>
               <span
                 onClick={() => setOpenOptions(!openOptions)}
-                className="block cursor-pointer text-white 
-                 py-3 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
+                className="block cursor-pointer text-white py-3 px-4 rounded-full bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500"
               >
                 {`${options.adult} Adult · ${options.children} Children · ${options.room} Room`}
               </span>
               {openOptions && (
-                <div className="absolute left-0 mt-2 bg-white p-4 rounded-md shadow-md z-10 w-full">
-                  <div className="mb-4 ">
+                <div className="absolute left-0 mt-2 bg-white p-4 rounded-md shadow-md z-10 w-full md:w-auto">
+                  <div className="mb-4">
                     <span className="text-gray-700">Adult</span>
-                    <div className="flex justify-around space-x-4">
+                    <div className="flex justify-around items-center space-x-4">
                       <button
                         disabled={options.adult <= 1}
                         className="text-gray-700 hover:text-blue-500"
@@ -185,7 +187,7 @@ const Search = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="mb-4 ">
+                  <div className="mb-4">
                     <span className="text-gray-700">Children</span>
                     <div className="flex justify-around items-center space-x-4">
                       <button
@@ -204,7 +206,7 @@ const Search = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="">
+                  <div>
                     <span className="text-gray-700">Room</span>
                     <div className="flex justify-around items-center space-x-4">
                       <button
@@ -216,7 +218,7 @@ const Search = () => {
                       </button>
                       <span className="text-gray-700">{options.room}</span>
                       <button
-                        className="text-gray-700 ml-2 hover:text-blue-500"
+                        className="text-gray-700 hover:text-blue-500"
                         onClick={() => handleOption("room", "i")}
                       >
                         +
@@ -227,12 +229,16 @@ const Search = () => {
               )}
             </div>
           </div>
-          <button
-            className="text-white bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:ring-blue-500"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
+
+          {/* Search Button */}
+          <div className="w-full md:w-auto">
+            <button
+              className="w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-3 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:ring-blue-500"
+              onClick={handleSearch}
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>

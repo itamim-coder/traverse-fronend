@@ -85,29 +85,39 @@ const ReviewSlider = () => {
           rewind: true,
           autoplay: true,
           arrows: false,
-          perPage: 3,
-          gap: 25,
-          pagination: false,
+          pagination: true,
+          perPage: 3, // Default for PC
+          gap: "1rem",
+          breakpoints: {
+            1024: {
+              perPage: 2, // Show 2 cards for tablets
+              gap: "1rem",
+            },
+            768: {
+              perPage: 1, // Show 1 card for phones
+              gap: "1rem",
+            },
+          },
         }}
         aria-label="Tour Reviews"
       >
         {reviews.map((review, index) => (
           <SplideSlide key={index}>
-            <div className="bg-white p-8 h-80 flex flex-col justify-between shadow-lg rounded-lg">
-              <p className="text-center overflow-hidden text-ellipsis line-clamp-3">
+            <div className="bg-white p-6 flex flex-col justify-between shadow-lg rounded-lg h-80">
+              <p className="text-center text-sm overflow-hidden text-ellipsis line-clamp-3">
                 {review.reviewText}
               </p>
               <div className="flex justify-between my-4">
                 <div>{getStars(review.rating)}</div>
-                <p>{review.reviewDate}</p>
+                <p className="text-xs text-gray-600">{review.reviewDate}</p>
               </div>
               <div className="grid justify-items-center">
                 <div className="avatar">
-                  <div className="w-20 rounded-xl">
+                  <div className="w-16 rounded-full">
                     <img src={review.userImage} alt={review.userName} />
                   </div>
                 </div>
-                <p className="text-lg font-semibold">{review.userName}</p>
+                <p className="text-sm font-semibold mt-2">{review.userName}</p>
               </div>
             </div>
           </SplideSlide>

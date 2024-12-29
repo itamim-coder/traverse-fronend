@@ -1,16 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
-import Form from "../Forms/form";
-import FormInput from "../Forms/FormInput";
-import { SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/app/services/auth.services";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
-import Alert from "../ui/Alert/alert";
+import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import Alert from "../ui/Alert/alert";
 
 type FormValues = {
   email: string;
@@ -18,65 +16,109 @@ type FormValues = {
 };
 
 const LoginPage = () => {
+  const { register, handleSubmit, setValue } = useForm<FormValues>();
   const [userLogin] = useUserLoginMutation();
   const router = useRouter();
-  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
-    console.log("login", data);
+
+  const handleCredentials = (type: string) => {
+    const newCredentials =
+      type === "user"
+        ? { email: "user@user.com", password: "123456" }
+        : { email: "admin@admin.com", password: "123456" };
+
+    // Programmatically set the input values
+    setValue("email", newCredentials.email);
+    setValue("password", newCredentials.password);
+  };
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log("rs login", res);
       if (res?.accessToken) {
-        toast("Login Successfully");
+        toast.success("Login Successfully");
         storeUserInfo({ accessToken: res?.accessToken });
         router.push("/");
       }
     } catch (err) {
-      console.log(err);
-      // toast.error("Error!!");
+      console.error(err);
+      toast.error("Error during login!");
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-white text-black">
           <h1 className="text-2xl font-bold text-center">Login</h1>
 
-          <Form submitHandler={onSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <FormInput
-                name="email"
+              <label className="block text-sm font-medium">Email Address</label>
+              <input
                 type="text"
-                size="large"
-                label="User Email"
-                className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
+                {...register("email")}
+                className="w-full px-4 py-3 rounded-md bg-violet-100 focus:border-violet-400"
               />
             </div>
             <div className="my-4">
-              <FormInput
-                name="password"
+              <label className="block text-sm font-medium">User Password</label>
+              <input
                 type="password"
-                size="large"
-                label="User Password"
-                className="w-full flex px-4 py-3 rounded-md 0 bg-violet-100 focus:dark:border-violet-400"
+                {...register("password")}
+                className="w-full px-4 py-3 rounded-md bg-violet-100 focus:border-violet-400"
               />
             </div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full py-2 px-4 text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Sign in
             </button>
-          </Form>
+          </form>
 
-          <div className="my-4 flex justify-between ">
-            <div className="border-1 border p-2 rounded-md">
-              <span className="font-bold "> User credential</span> <br /> email
-              : user@user.com <br /> pass : 123456
-            </div>
-            <div className="border-1 border p-2 rounded-md">
-              <span className="font-bold "> Admin credential</span> <br /> email
-              : admin@admin.com <br /> pass : 123456
-            </div>
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={() => handleCredentials("user")}
+              className="flex w-full items-center justify-center gap-3.5 rounded-[20px] border border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 0 24 24"
+                width="24px"
+                fill="#4285F4"
+              >
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+              User
+            </button>
+            <button
+              onClick={() => handleCredentials("admin")}
+              className="flex w-full items-center justify-center gap-3.5 rounded-[20px] border border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
+            >
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  enable-background="new 0 0 24 24"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  width="24px"
+                  fill="#75FBFD"
+                >
+                  <g>
+                    <rect fill="none" height="24" width="24" />
+                  </g>
+                  <g>
+                    <g>
+                      <path d="M18.39,14.56C16.71,13.7,14.53,13,12,13c-2.53,0-4.71,0.7-6.39,1.56C4.61,15.07,4,16.1,4,17.22V20h16v-2.78 C20,16.1,19.39,15.07,18.39,14.56z M18,18H6v-0.78c0-0.38,0.2-0.72,0.52-0.88C7.71,15.73,9.63,15,12,15 c2.37,0,4.29,0.73,5.48,1.34C17.8,16.5,18,16.84,18,17.22V18z" />
+                      <path d="M12,12c2.21,0,4-1.79,4-4c0-1.37,0-3.5,0-3.5C16,3.67,15.33,3,14.5,3c-0.52,0-0.98,0.27-1.25,0.67 C12.98,3.27,12.52,3,12,3s-0.98,0.27-1.25,0.67C10.48,3.27,10.02,3,9.5,3C8.67,3,8,3.67,8,4.5c0,0,0,2.12,0,3.5 C8,10.21,9.79,12,12,12z M10,5.5h4V8c0,1.1-0.9,2-2,2s-2-0.9-2-2V5.5z" />
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              Admin
+            </button>
           </div>
 
           <div className="flex items-center pt-4 space-x-1">
@@ -89,9 +131,7 @@ const LoginPage = () => {
           <div className="flex justify-center space-x-4">
             <button
               onClick={() =>
-                signIn("google", {
-                  callbackUrl: "http://localhost:3000",
-                })
+                signIn("google", { callbackUrl: "http://localhost:3000" })
               }
               aria-label="Log in with Google"
               className="p-3 rounded-sm"
@@ -105,13 +145,9 @@ const LoginPage = () => {
               </svg>
             </button>
           </div>
-          <p className="text-xs text-center sm:px-6 ">
-            Don't have an account?
-            <Link
-              href={"/signup"}
-              rel="noopener noreferrer"
-              className="underline "
-            >
+          <p className="text-xs text-center sm:px-6 mt-4">
+            Don't have an account?{" "}
+            <Link href={"/signup"} className="underline">
               Sign up
             </Link>
           </p>

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const HotelBookingManage = () => {
   const query: Record<string, any> = {};
-
+  const [selectedBooking, setSelectedBooking] = useState<any>(null);
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -109,7 +109,13 @@ const HotelBookingManage = () => {
                     {data?.status}
                   </td>
                   <td className="py-4 px-6  border-b text-end">
-                    <button className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md">
+                    <button
+                      onClick={() => {
+                        setSelectedBooking(data); // Set the selected booking
+                        document.getElementById("my_modal_3").showModal();
+                      }}
+                      className="bg-blue-500 mx-1 hover:scale-110 scale-100 transition-all duration-100 text-white py-2 px-4 rounded-md"
+                    >
                       Details
                     </button>
                     {/* <button
@@ -124,6 +130,40 @@ const HotelBookingManage = () => {
             ))}
           </tbody>
         </table>
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            {selectedBooking ? (
+              <div>
+                <h3 className="font-bold text-lg">
+                  Booking Details for {selectedBooking.customer_name}
+                </h3>
+                <ul className="py-4">
+                  <li>
+                    <strong>Phone:</strong> {selectedBooking.phone}
+                  </li>
+                  <li>
+                    <strong>Status:</strong> {selectedBooking.status}
+                  </li>
+                  <li>
+                    <strong>Total Amount:</strong>{" "}
+                    {selectedBooking.hotelBooks?.totalAmount}
+                  </li>
+                  <li>
+                    <strong>Payment Status:</strong>{" "}
+                    {selectedBooking.status}
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <p className="py-4">No booking details available.</p>
+            )}
+          </div>
+        </dialog>
       </div>
 
       <Pagination
