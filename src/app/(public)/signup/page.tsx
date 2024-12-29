@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import SignupPage from "../components/Signup/signup";
+
 import { Metadata } from "next";
+import SignupPage from "@/app/components/Signup/signup";
 
 
 export const metadata: Metadata = {

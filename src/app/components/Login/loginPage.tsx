@@ -47,30 +47,43 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-white text-black">
-          <h1 className="text-2xl font-bold text-center">Login</h1>
+      <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
+        {/* <img
+          src="https://images.unsplash.com/photo-1461237439866-5a557710c921?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Background"
+          className="absolute inset-0 object-cover w-full h-full blur-md"
+        /> */}
+        <div className="relative w-full max-w-md p-8 space-y-3 rounded-xl bg-white bg-opacity-80 shadow-lg">
+          <h1 className="text-xl font-bold text-center text-gray-800">
+            Welcome Back to TraVerse!
+          </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Email Address
+              </label>
               <input
                 type="text"
                 {...register("email")}
-                className="w-full px-4 py-3 rounded-md bg-violet-100 focus:border-violet-400"
+                className="w-full px-4 py-3 mt-2 rounded-md bg-violet-100 focus:ring-2 focus:ring-indigo-400"
+                placeholder="Enter your email"
               />
             </div>
             <div className="my-4">
-              <label className="block text-sm font-medium">User Password</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
               <input
                 type="password"
                 {...register("password")}
-                className="w-full px-4 py-3 rounded-md bg-violet-100 focus:border-violet-400"
+                className="w-full px-4 py-3 mt-2 rounded-md bg-violet-100 focus:ring-2 focus:ring-indigo-400"
+                placeholder="Enter your password"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              className="w-full py-3 px-4 text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Sign in
             </button>
@@ -79,7 +92,7 @@ const LoginPage = () => {
           <div className="flex justify-between mt-4">
             <button
               onClick={() => handleCredentials("user")}
-              className="flex w-full items-center justify-center gap-3.5 rounded-[20px] border border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
+              className="flex w-full items-center justify-center gap-3.5 rounded-[20px] border border-gray-400 border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +108,7 @@ const LoginPage = () => {
             </button>
             <button
               onClick={() => handleCredentials("admin")}
-              className="flex w-full items-center justify-center gap-3.5 rounded-[20px] border border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
+              className="flex w-full  border-gray-400  items-center justify-center gap-3.5 rounded-[20px] border border-stroke bg-gray p-2 hover:bg-opacity-50  max-w-[150px] shadow shadow-[#F4F6FB]"
             >
               <span>
                 <svg
@@ -122,32 +135,32 @@ const LoginPage = () => {
           </div>
 
           <div className="flex items-center pt-4 space-x-1">
-            <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-            <p className="px-3 text-sm dark:text-gray-400">
-              Login with social accounts
-            </p>
-            <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
+            <div className="flex-1 h-px bg-gray-300"></div>
+            <p className="px-3 text-sm text-gray-600">Or log in with</p>
+            <div className="flex-1 h-px bg-gray-300"></div>
           </div>
+
           <div className="flex justify-center space-x-4">
             <button
               onClick={() =>
                 signIn("google", { callbackUrl: "http://localhost:3000" })
               }
               aria-label="Log in with Google"
-              className="p-3 rounded-sm"
+              className="p-3 rounded-full bg-white shadow-md hover:shadow-lg"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
-                className="w-5 h-5 fill-current"
+                className="w-5 h-5 fill-current text-gray-700"
               >
                 <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
               </svg>
             </button>
           </div>
-          <p className="text-xs text-center sm:px-6 mt-4">
+
+          <p className="text-xs text-center text-gray-600 mt-4">
             Don't have an account?{" "}
-            <Link href={"/signup"} className="underline">
+            <Link href="/signup" className="underline text-indigo-600">
               Sign up
             </Link>
           </p>

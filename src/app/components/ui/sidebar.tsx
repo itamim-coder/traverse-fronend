@@ -3,9 +3,10 @@ import { SideBarItems } from "@/constants/sidebarItem";
 import { authOptions } from "@/lib/AuthOptions";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import Logo from "../../../../public/assets/traverse.png";
 const SideBar = () => {
   const session = useSession();
 
@@ -40,27 +41,35 @@ const SideBar = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <Link href="/" className="btn btn-ghost normal-case text-xl">
-            TraVerse.
+          <Link
+            href="/"
+            className="flex bg-gray-300 rounded  justify-center items-center  border-gray-500"
+          >
+            <img
+              src="/assets/traverse.png"
+              alt="Logo"
+              className="h-20  mt-3 object-cover w-full"
+            />
           </Link>
+
           {menus?.map((menu) => (
             <li key={menu.id} className="mb-2">
               {menu.submenus ? (
                 <div
                   onClick={() => handleAccordionToggle(menu.id)}
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                 >
                   <span className="text-base font-semibold hover:text-secondary flex">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"
                       height="22"
-                      fill="hsl(var(--s))"
+                      fill="currentColor"
                       viewBox="0 0 256 256"
                     >
                       <path d={menu.icon}></path>
                     </svg>
-                    {menu.text}
+                    <div className="ml-2">{menu.text}</div>
                   </span>
                 </div>
               ) : (
@@ -73,15 +82,16 @@ const SideBar = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"
                       height="22"
-                      fill="hsl(var(--s))"
+                      fill="currentColor"
                       viewBox="0 0 256 256"
                     >
                       <path d={menu.icon}></path>
                     </svg>
-                    {menu.text}
+                    <div className="ml-2">{menu.text}</div>
                   </span>
                 </Link>
               )}
+
               {activeAccordion === menu.id && (
                 <ul
                   className={

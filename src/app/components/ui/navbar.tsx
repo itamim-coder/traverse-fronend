@@ -85,16 +85,13 @@ const NavBar = ({ session }: { session: any }) => {
             alt="Logo"
             width={50}
             height={50}
-             className="rounded-full border border-black"
+            className="rounded-full border border-black"
           />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        {/* <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li tabIndex={0}>
+        <ul className="menu menu-horizontal px-1">
+          {/* <li tabIndex={0}>
             <details>
               <summary>Parent</summary>
               <ul className="p-2">
@@ -106,11 +103,20 @@ const NavBar = ({ session }: { session: any }) => {
                 </li>
               </ul>
             </details>
+          </li> */}
+          <li>
+            <Link href={"/about"} className="justify-between">
+              About
+              {/* <span className="badge">New</span> */}
+            </Link>
           </li>
           <li>
-            <a>Item 3</a>
+            <Link href={"/travel-guide"} className="justify-between">
+              Travel Guide
+              {/* <span className="badge">New</span> */}
+            </Link>
           </li>
-        </ul> */}
+        </ul>
       </div>
       <div className="navbar-end">
         {session?.user || email ? (
