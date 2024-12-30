@@ -29,10 +29,10 @@ const BookingPage = () => {
                   duration={500}
                   className={`px-16 ${
                     activeSection === "hotel" ? "text-main " : ""
-                  } py-2 text-lg px-1 font-semibold`}
+                  } cursor-pointer py-2 text-lg px-1 font-semibold`}
                   onClick={() => handleSectionChange("hotel")}
                 >
-                  <span className="flex items-center">
+                  <span className="flex  items-center">
                     <LiaHotelSolid />
                     Hotel
                   </span>
@@ -45,7 +45,7 @@ const BookingPage = () => {
                   duration={500}
                   className={`px-16 ${
                     activeSection === "tour" ? "text-main " : ""
-                  } py-2 text-lg px-1 font-semibold`}
+                  } cursor-pointer py-2 text-lg px-1 font-semibold`}
                   onClick={() => handleSectionChange("tour")}
                 >
                   <span className="flex items-center">

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "../../../../public/assets/Green Modern and Minimalistic Travel Typography Logo.png";
+import Logo from "../../../../public/assets/traverse.png";
 
 const FooterItem = ({ text, link }) => {
   return (
@@ -32,12 +32,12 @@ const footerBlocks = [
       {
         id: 1,
         text: "About",
-        link: "#",
+        link: "/about",
       },
       {
         id: 2,
-        text: "Career",
-        link: "#",
+        text: "Travel Guide",
+        link: "/travel-guide",
       },
       {
         id: 3,
