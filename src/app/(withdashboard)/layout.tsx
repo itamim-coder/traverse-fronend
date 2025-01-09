@@ -46,9 +46,9 @@ export default function DashboardLayout({
   };
   const googleLogout = () => {
     signOut().then(() => {
-      logOut(); // Trigger local log out after Google logout
-      router.push("/");
+      logOut(); 
     });
+
   };
   return (
     <>
@@ -77,7 +77,7 @@ export default function DashboardLayout({
                   </label>
                 </div>
                 <div className="flex-none gap-2">
-                  {session?.user || email ? (
+                  {session?.data?.user || email ? (
                     <>
                       <div className="dropdown dropdown-end">
                         <label
@@ -96,10 +96,10 @@ export default function DashboardLayout({
                   <a>Settings</a>
                 </li> */}
                           <li>
-                            {session?.user ? (
+                            {session?.data?.user ? (
                               <>
                                 <a onClick={googleLogout} key="googleLogout">
-                                  Logout
+                                  Google Logout
                                 </a>
                               </>
                             ) : (

@@ -20,7 +20,7 @@ export async function uploadImageToCloudinary(files: File | File[]) {
         formData
       );
 
-      return cloudinaryResponse.data.url;
+      return cloudinaryResponse.data.secure_url;
     });
 
     const urls = await Promise.all(uploadPromises);
